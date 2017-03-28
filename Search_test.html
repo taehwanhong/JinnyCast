@@ -1,3 +1,4 @@
+<div id="player"></div>
 <form name="form1" method="POST" onsubmit="return false;">
     <input type="text" id="search_box"><button onclick="fnGetList();">
         가져오기
@@ -5,8 +6,59 @@
 </form>
 <div id="get_view"></div>
 <div id="nav_view"></div>
+
+
+
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script>
+    ///iframe player
+
+    var firstID
+        // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    // console.log(jdata);
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '360',
+            width: '640',
+            videoId: 'n139g-IGSHo',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 60000);
+            done = true;
+        }
+    }
+
+    function stopVideo() {
+        player.stopVideo();
+    }
+
+    /// Search API
     function fnGetList(sGetToken) {
         var $getval = $("#search_box").val();
         if ($getval == "") {
@@ -15,9 +67,14 @@
             return;
         }
 
+
+        // clear //
         $("#get_view").empty();
         $("#nav_view").empty();
+        $("#player").empty();
 
+
+        // query section //
         var sTargetUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance" +
             "&q=" + encodeURIComponent($getval) + "&key=AIzaSyDjBfDWFgQa6bdeLc1PAM8EoDAFB_CGYig";
         if (sGetToken) {
@@ -29,19 +86,24 @@
             url: sTargetUrl,
             dataType: "jsonp",
             success: function(jdata) {
-                console.log(jdata);
-
+                // console.log(jdata.items[0].id.videoId);
+                firstID = jdata.items[0].id.videoId;
+                console.log(firstID);
+                onYouTubeIframeAPIReady();
                 $(jdata.items).each(function(i) {
-                    console.log(this.snippet.channelId);
-                    $("#get_view").append("<p class='box'><a href='https://youtu.be/'"+ this.id.videoId + ">" + this.snippet.title + "</a></p>");
+                    // console.log(this.snippet.channelId);
+                    $("#get_view").append("<p class='box'><a href='https://youtu.be/'" + this.id.videoId + ">" + this.snippet.title + "</a></p>"); //list 보여주기
                 }).promise().done(function() {
-                    if (jdata.prevPageToken) {
-                        $("#nav_view").append("<a href='javascript:fnGetList(\""+jdata.prevPageToken+"\");'><이전페이지></a>");
+                        if (jdata.prevPageToken) {
+                            $("#nav_view").append("<a href='javascript:fnGetList(\"" + jdata.prevPageToken + "\");'><이전페이지></a>");
+                        }
+                        if (jdata.nextPageToken) {
+                            $("#nav_view").append("<a href='javascript:fnGetList(\"" + jdata.nextPageToken + "\");'><다음페이지></a>");
+                        }
                     }
-                    if (jdata.nextPageToken) {
-                        $("#nav_view").append("<a href='javascript:fnGetList(\""+jdata.nextPageToken+"\");'><다음페이지></a>");
-                    }
-                });
+
+                );
+                return jdata;
             },
             error: function(xhr, textStatus) {
                 console.log(xhr.responseText);
