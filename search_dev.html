@@ -2,14 +2,16 @@
 
 <head>
     <!--js importing-->
-    <script src="player.js"></script>
+
     <script src="//code.jquery.com/jquery.min.js"></script>
+    <!--<script src="player.js"></script>-->
     <script src="search.js"></script>
 </head>
 
 <body>
 
-    <div id="player"></div>
+    <div id="player_view"></div>
+    <!--<iframe id="gangnamStyleIframe" width="560" height="315" src="https://www.youtube.com/embed/9bZkp7q19f0?rel=0&enablejsapi=1" frameborder="0" allowfullscreen></iframe>-->
     <form name="form1" method="POST" onsubmit="return false;">
         <input type="text" id="search_box"><button onclick="fnGetList();">
             가져오기
