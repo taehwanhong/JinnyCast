@@ -88,6 +88,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: 'Nanum Square';
 }
 HTML5 display-role reset for older browsers article,
 aside,
@@ -121,7 +122,12 @@ q:after {
   content: none;
 }
 .albumTitleBar {
+  padding: 0.3rem;
   width: 100%;
+}
+.albumTitleBar h1 {
+  font-size: 1rem;
+  text-align: center;
 }
 #mediaPlayView {
   width: 50%;

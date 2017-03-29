@@ -1,3 +1,12 @@
+// Variables
+
+// Gray and Brand Colors for use across theme
+
+@theme-primary:    #0075d6;
+@theme-danger:     #e74c3c;
+
+
+
 * {
     border: 0.5px solid lightsteelblue;
 }
@@ -21,6 +30,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+    font-family: 'Nanum Square';
 }
  HTML5 display-role reset for older browsers 
 article, aside, details, figcaption, figure, 
@@ -43,7 +53,12 @@ q:before, q:after {
 }
 
 .albumTitleBar {
+    padding: 0.3rem;
     width: 100%;
+    h1 {
+        font-size: 1rem;
+        text-align: center;
+    }
 }
 
 #mediaPlayView {

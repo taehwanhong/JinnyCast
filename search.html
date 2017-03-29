@@ -5,17 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>JinnieCast</title>
         <link rel="stylesheet" href="dist/css/main.css">
+        <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
     </head>
 
     <body>
-        <header id="albumTitleBar">
+        <header class="albumTitleBar">
             <h1>{albumTitle}</h1>
         </header>
         <div id="wrapper">
             <div id="main">
                 <section id="mediaPlayView">
                     <div class="videoPlayer">
-                        <!--유트부 플레이어가 재생됩니다.-->
                     </div>
                     <ul class="userPlaylist">
                     </ul>
@@ -26,15 +26,12 @@
                             <input type="text" id="search_box">
                             <button onclick="fnGetList();">검색</button>
                         </form>
-                        <div id="get_view">
-                            <!-- id="get_view"를 class="youtubeMedia"로 변경-->
-                            <!--이곳에서 유트부 플레이어가 재생됩니다.-->
+                        <div class="youtubeMedia">
                         </div>
                     </div>
                     <ul class="searchList">
                     </ul>
-                    <div id="nav_view">
-                        <!-- id="nav_view"를 class="pagination"로 변경-->
+                    <div class="pagination">
                     </div>
                 </section>
             </div>
@@ -50,10 +47,14 @@
             <div class="playControl">
             </div>
         </footer>
-        <script src="dist/js/search.js"></script>
+        <!-- javascript -->
+        <script src="static/js/auth.js"></script>
+        <script src="static/js/player.js"></script>
+        <script src="static/js/search.js"></script>
+        <script src="static/js/Youtubesearch.js"></script>
         <script src="//code.jquery.com/jquery.min.js"></script>
-        <script src="js/search.js"></script>
-
+       
+        
         <script>
         </script>
     </body>
