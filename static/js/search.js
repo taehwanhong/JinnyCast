@@ -33,9 +33,10 @@ var fnGetList = function(sGetToken) {
         success: function(jdata) {
 
             $(jdata.items).each(function(i) {
-                $(".searchList").append("<li class='box' id='" + i + "'>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
+                $(".searchList").append("<li class='box' id='" + i + "'><img src='" + jdata.items[i].snippet.thumbnails.high.url + "' width = 20px>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
                 nameSpace.getvideoId.push(jdata.items[i].id.videoId);
-                // console.log(nameSpace.getvideoId);
+                // console.log(jdata.snippet.thumnail.default);
+                console.log(jdata.items[i].snippet.thumbnails.high.url);
             }).promise().done(function() {
                 //Before, Next Page disabled
                 // if (jdata.prevPageToken) {
@@ -54,7 +55,6 @@ var fnGetList = function(sGetToken) {
             return;
         }
     });
-    // console.log(nameSpace.getvideoId);
 }
 
 var playVideoSelect = function() {
