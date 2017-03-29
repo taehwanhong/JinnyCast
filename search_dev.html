@@ -1,5 +1,13 @@
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JinnieCast</title>
+        <link rel="stylesheet" href="search.css">
+    </head>
 
+<<<<<<< HEAD:search_dev.html
 <head>
     <!--js importing-->
 
@@ -21,5 +29,56 @@
     <div id="nav_view"></div>
 
 </body>
+=======
+    <body>
+        <header id="albumTitleBar">
+            <h1>{albumTitle}</h1>
+        </header>
+        <div id="wrapper">
+            <div id="main">
+                <section id="mediaPlayView">
+                    <div class="videoPlayer">
+                        <!--유트부 플레이어가 재생됩니다.-->
+                    </div>
+                    <ul class="userPlaylist">
+                    </ul>
+                </section>
+                <section id="editPlaylist">
+                    <div class="addNewMedia">
+                        <form name="form1" method="POST" onsubmit="return false;">
+                            <input type="text" id="search_box">
+                            <button onclick="fnGetList();">검색</button>
+                        </form>
+                        <div id="get_view">
+                            <!-- id="get_view"를 class="youtubeMedia"로 변경-->
+                            <!--이곳에서 유트부 플레이어가 재생됩니다.-->
+                        </div>
+                    </div>
+                    <ul class="searchList">
+                    </ul>
+                    <div id="nav_view">
+                        <!-- id="nav_view"를 class="pagination"로 변경-->
+                    </div>
+                </section>
+            </div>
+            <nav>
+                <ul>
+                    <li>Search</li>
+                    <li>My Album</li>
+                    <li>Share</li>
+                </ul>
+            </nav>
+        </div>
+        <footer>
+            <div class="playControl">
+            </div>
+        </footer>
+        <script src="player.js"></script>
+        <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="search.js"></script>
+>>>>>>> cfed34cfac9a8dcf99adad301b48a73a51c397f5:search.html
 
+        <script >
+        </script>
+    </body>
 </html>
