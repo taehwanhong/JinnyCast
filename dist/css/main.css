@@ -1,6 +1,3 @@
-* {
-  border: 0.5px solid lightsteelblue;
-}
 html,
 body,
 div,
@@ -86,11 +83,13 @@ video {
   padding: 0;
   /*border: 0;*/
   font-size: 100%;
+  color: #424242;
   font: inherit;
   vertical-align: baseline;
   font-family: 'Nanum Square';
+  -webkit-font-smoothing: antialiased;
 }
-HTML5 display-role reset for older browsers article,
+article,
 aside,
 details,
 figcaption,
@@ -121,40 +120,80 @@ q:after {
   content: '';
   content: none;
 }
+body {
+  overflow: hidden;
+}
+header {
+  height: 5%;
+}
+#wrapper {
+  display: flex;
+  height: 80%;
+}
+footer {
+  height: 15%;
+}
+/* font*/
+.verticalCenterFont {
+  position: relative;
+  vertical-align: middle;
+  transform: translateY(-50%);
+  top: 50%;
+}
 .albumTitleBar {
-  padding: 0.3rem;
   width: 100%;
+  position: relative;
 }
 .albumTitleBar h1 {
   font-size: 1rem;
   text-align: center;
+  position: relative;
+  vertical-align: middle;
+  transform: translateY(-50%);
+  top: 50%;
 }
 #mediaPlayView {
-  width: 50%;
+  width: 55%;
 }
 .videoPlayer {
-  height: 50%;
-  background: blue;
+  height: 55%;
 }
 .userPlaylist {
-  height: 50%;
+  height: 45%;
   background: lightyellow;
 }
 #editPlaylist {
   width: 50%;
+  background: lightgoldenrodyellow;
 }
 #main {
   display: flex;
   min-height: 100%;
-  width: 93%;
+  width: 94%;
 }
-#playControl {
+footer {
   bottom: 0;
-  height: 50px;
+  position: fixed;
+  background: burlywood;
 }
 nav {
-  width: 7%;
+  width: 6%;
 }
-#wrapper {
+nav ul {
+  height: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linen;
+}
+nav li {
+  font-size: 0.9rem;
+  min-height: 25%;
+  width: 100%;
+  text-align: center;
+}
+/* video */
+.videoPlayer {
+  width: 100%;
 }

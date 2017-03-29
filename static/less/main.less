@@ -2,14 +2,15 @@
 
 // Gray and Brand Colors for use across theme
 
-@theme-primary:    #0075d6;
-@theme-danger:     #e74c3c;
+@theme-primary:    #E91E63;
+@font-color: #424242;
+// @theme-danger:     #e74c3c;
 
 
-
-* {
-    border: 0.5px solid lightsteelblue;
-}
+// reset css
+//* {
+    // border: 0.001rem solid lightsteelblue;
+//}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -28,11 +29,13 @@ time, mark, audio, video {
 	padding: 0;
 	/*border: 0;*/
 	font-size: 100%;
+    color: @font-color;
 	font: inherit;
 	vertical-align: baseline;
     font-family: 'Nanum Square';
+    -webkit-font-smoothing: antialiased;
 }
- HTML5 display-role reset for older browsers 
+
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -52,49 +55,90 @@ q:before, q:after {
 	content: none;
 }
 
+// Layout
+body {
+    overflow: hidden;
+}
+header {
+   height: 5%; 
+}
+#wrapper {
+    display: flex;
+    height: 80%;
+}
+footer {
+    height: 15%;
+}
+
+/* font*/
+.verticalCenterFont {
+    position: relative;
+    vertical-align: middle;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
 .albumTitleBar {
-    padding: 0.3rem;
     width: 100%;
+    position: relative;
     h1 {
         font-size: 1rem;
         text-align: center;
+        .verticalCenterFont
+        
+
     }
 }
 
 #mediaPlayView {
-    width: 50%;
+    width: 55%;
 }
 
 .videoPlayer {
-    height: 50%;
-    background: blue;
+    height: 55%;
 }
 
 .userPlaylist{
-    height: 50%;
+    height: 45%;
     background: lightyellow;
 }
 
 #editPlaylist{
     width: 50%;
+    background: lightgoldenrodyellow;
 }
 
 #main{
     display: flex;
     min-height: 100%;
-    width: 93%;
+    width: 94%;
 }
 
-#playControl{
+footer{
     bottom: 0;
-    height: 50px;
+    position: fixed;
+    background: burlywood;
 }
 
 nav {
-    width: 7%;
+    width: 6%;
+    ul {
+        height: 100%;
+        display: flex;          
+        flex-direction: column; 
+        justify-content: center;
+        align-items: center; 
+        background: linen;
+    }
+    li {
+        font-size: 0.9rem;
+        min-height: 25%;
+        width: 100%;
+        text-align: center;
+    }
 }
 
-#wrapper {
-    display: flex;
+/* video */
+.videoPlayer {
+    width: 100%;
 }
-
