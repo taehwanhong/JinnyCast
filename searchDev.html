@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JinnieCast</title>
+    <link rel="stylesheet" href="dist/css/main.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
+</head>
+
+<body>
+    <header class="albumTitleBar">
+        <h1>{albumTitle}</h1>
+    </header>
+    <div id="wrapper">
+        <div id="main">
+            <section id="mediaPlayView">
+                <div class="videoPlayer">
+                </div>
+                <ul class="userPlaylist">
+                </ul>
+            </section>
+            <section id="editPlaylist">
+                <div class="addNewMedia">
+                    <form name="form1" method="POST" onsubmit="return false;">
+                        <input type="text" id="search_box">
+                        <button onclick="fnGetList();">검색</button>
+                    </form>
+                    <div class="youtubeMedia">
+                    </div>
+                </div>
+                <ul class="searchList">
+                </ul>
+                <div class="pagination">
+                </div>
+            </section>
+        </div>
+        <nav>
+            <ul>
+                <li>Search</li>
+                <li>My Album</li>
+                <li>Share</li>
+            </ul>
+        </nav>
+    </div>
+    <footer>
+        <div class="playControl">
+        </div>
+    </footer>
+    <!-- javascript -->
+    <script src="static/js/auth.js"></script>
+    <script src="static/js/player.js"></script>
+    <script src="static/js/search.js"></script>
+    <script src="static/js/Youtubesearch.js"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+
+
+    <script>
+    </script>
+</body>
+
+</html>
