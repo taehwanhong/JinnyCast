@@ -2,6 +2,7 @@ var nameSpace = {};
 nameSpace.$getval = '';
 nameSpace.getvideoId = [];
 nameSpace.playList = [];
+nameSpace.jdata = [];
 
 
 var fnGetList = function(sGetToken) {
@@ -32,9 +33,12 @@ var fnGetList = function(sGetToken) {
         dataType: "jsonp",
         success: function(jdata) {
 
+            nameSpace.jdata = jdata; //jdata.
+            searchResultView();
             $(jdata.items).each(function(i) {
-                $(".searchList").append("<li class='box' id='" + i + "'><img src='" + jdata.items[i].snippet.thumbnails.high.url + "' width = 20px>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
-                nameSpace.getvideoId.push(jdata.items[i].id.videoId);
+
+                // $(".searchList").append("<li class='box' id='" + i + "'><img src='" + jdata.items[i].snippet.thumbnails.high.url + "' width = 20px>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
+                nameSpace.getvideoId.push(jdata.items[i].id.videoId); //nameSpace.getvideoId에 검색된 videoID 배열로 추가
                 // console.log(jdata.snippet.thumnail.default);
                 console.log(jdata.items[i].snippet.thumbnails.high.url);
             }).promise().done(function() {
@@ -45,7 +49,7 @@ var fnGetList = function(sGetToken) {
                 // if (jdata.nextPageToken) {
                 //     $("#nav_view").append("<ahref='javascript:fnGetList(\"" + jdata.nextPageToken + "\");'><다음페이지></a>");
                 // }
-                $(".videoPlayer").append("<iframe src = https://www.youtube.com/embed/" + nameSpace.getvideoId[0] + "?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
+                $(".videoPlayer").append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[0] + "?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
                 playVideoSelect();
             });
         },
@@ -57,12 +61,34 @@ var fnGetList = function(sGetToken) {
     });
 }
 
+var searchResultView = function() {
+    var searchResultList = '';
+    var getSearchListDOM = document.querySelector('.searchList');
+    for (var i = 0; i < nameSpace.jdata.items.length; i++) {
+        var getTemplate = document.querySelector('#searchVideo'); //template queryselect
+        var getHtmlTemplate = getTemplate.innerHTML; //get html in template
+        var adaptTemplate = getHtmlTemplate.replace("{videoImage}", nameSpace.jdata.items[i].snippet.thumbnails.high.url)
+            .replace("{videoTitle}", nameSpace.jdata.items[i].snippet.title)
+            .replace("{videoViews}", "TBD")
+            .replace("{id}", i);
+
+        searchResultList = searchResultList + adaptTemplate;
+        console.log();
+    }
+    getSearchListDOM.innerHTML = searchResultList;
+};
+// $(".searchList").append("<li class='box' id='" + i + "'><img src='" + jdata.items[i].snippet.thumbnails.high.url + "' width = 20px>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
+
+
+
+
 var playVideoSelect = function() {
     $(".searchList").on("click", "li", function() { // 검색된 list click했을경우.
         var tagId = $(this).attr('id');
-        // console.log(tagId);
+        console.log(tagId);
+        console.log(nameSpace.getvideoId[tagId]);
         $(".videoPlayer").empty(); //player Dom초기화
-        $(".videoPlayer").append("<iframe src = https://www.youtube.com/embed/" + nameSpace.getvideoId[tagId] + "?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
+        $(".videoPlayer").append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[tagId] + "'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
     });
 }
 
