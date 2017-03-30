@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>JinnieCast</title>
         <link rel="stylesheet" href="dist/css/main.css">
+        <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
+        <link href='//maxcdn.icons8.com/fonts/line-awesome/css/line-awesome.min.css' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
         <script src="//code.jquery.com/jquery.min.js"></script>
-        <script src="https://use.fontawesome.com/d2783c0f20.js"></script>
     </head>
 
     <body>
@@ -19,21 +20,23 @@
             <div id="main">
                 <section id="mediaPlayView">
                     <div class="videoPlayer">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8A2t_tAjMz8" frameborder="0" allowfullscreen></iframe>
+                        <!--<iframe width="100%" height="100%" src="https://www.youtube.com/embed/8A2t_tAjMz8" frameborder="0" allowfullscreen></iframe>-->
                     </div>
                     <ul class="userPlaylist">
+
                     </ul>
                 </section>
                 <section id="editPlaylist">
                     <div class="addNewMedia">
                         <form name="form1" method="POST" onsubmit="return false;">
-                            <input type="text" id="search_box">
-                            <button onclick="fnGetList();">검색</button>
+                            <input type="text" id="search_box" placeholder="Search your favorite music">
+                            <button onclick="fnGetList();"></button>
                         </form>
                         <div class="youtubeMedia">
                         </div>
                     </div>
                     <ul class="searchList">
+                        
                     </ul>
                     <div class="pagination">
                     </div>
@@ -41,10 +44,10 @@
             </div>
             <nav>
                 <ul>
-                    <li class="search_btn">Search</li>
-                    <li class="album_btn">My Album</li>
-                    <li class="share_btn">Share</li>
-                    <li class="about_btn">About</li>
+                    <li class="search_btn"><i class="la la-search"></i><span>Search</span></li>
+                    <li class="album_btn"><i class="la la-music"></i><span>My Album</span></li>
+                    <li class="popular_btn"><i class="la la-heart-o"></i><span>popular</span></li>
+                    <li class="about_btn"><i class="la la-info-circle"></i><span>About<span></li>
                 </ul>
                 <div class="pagination">
                 </div>
@@ -60,7 +63,26 @@
         <script src="static/js/search.js"></script>
         <script src="static/js/Youtubesearch.js"></script>
         <script src="//code.jquery.com/jquery.min.js"></script>
-        <script>
+        <!-- 우측 앨범을 앨범에 있는 리스트를 불러옵니다. -->
+        <script type="template" id="selectedVideo">
+            <li>
+                <button class="icon_btn"><i class="la la-play-circle-o"></i></button>
+                <div class="videoInfo">
+                    <span class="videoTitle">{videoTitle}</span>
+                </div>
+                <button class="icon_btn"><i class="la la-minus-circle"></i></button>
+            </li>
+        </script>
+        <!-- youtube 키워드 검색한 리스트를 불러옵니다.-->
+        <script type="template" id="searchVideo">
+            <li class="videoDetail">
+                <img class="videoImage" src="{videoImage}" />
+                <div class="videoInfo">
+                    <span class="videoTitle">{videoTitle}</span>
+                    <span class="videoViews">{videoViews}</span>
+                </div>
+                <button class="icon_btn"><i class="la la-plus-circle"></i></button>
+            </li>
         </script>
     </body>
 </body>
