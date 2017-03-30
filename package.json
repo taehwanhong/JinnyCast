@@ -10,7 +10,7 @@
     "catw": "~0.2.0"
   },
   "scripts": {
-    "watch-css": "catw -c 'lessc -' 'static/less/*.less' -o dist/css/*.css -v",
+    "watch-css": "catw -c 'lessc -' 'static/less/main.less' -o dist/css/main.css -v",
     "watch-js": "watchify static/js/*.js -o dist/js/search.js -dv",
     "watch": "npm run watch-css & npm run watch-js",
     "build-css": "catw -c 'lessc -' 'static/less/main.less' > dist/css/main.css",

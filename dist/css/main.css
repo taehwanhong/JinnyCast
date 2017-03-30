@@ -351,11 +351,8 @@ li.videoDetail {
 }
 .videoImage {
   border-radius: 50%;
-  object-fit: cover;
-  width: 3.5rem;
-  height: 3.5rem;
-  align-items: flex-start;
-  justify-content: center;
+  max-width: 3.5rem;
+  max-height: 3.5rem;
   position: relative;
   vertical-align: middle;
   transform: translateY(-50%);
@@ -388,4 +385,181 @@ li.videoDetail {
 footer {
   background: #fff;
   box-shadow: -3px -7px 54px -13px rgba(0, 0, 0, 0.59);
+}
+/*-----------------------
+    Audio Player - AP
+------------------------*/
+.ap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  font-family: inherit;
+  font-size: 14px;
+  user-select: none;
+  border-top: 1px solid #ccc;
+  background: #f2f2f2;
+  box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
+  z-index: 99999;
+}
+.ap__inner {
+  display: flex;
+  max-width: 1440px;
+  margin: auto;
+}
+.ap__item {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+.ap__item--playback > .ap__controls,
+.ap__item--settings > .ap__controls {
+  flex: 0 25%;
+}
+@keyframes fs {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.ap__item--track {
+  flex: 1 40%;
+  padding: 0 20px;
+}
+.track {
+  position: relative;
+  width: 100%;
+  align-self: flex-start;
+  padding: 5px 0 0;
+}
+.track__title {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  padding-right: 80px;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.track__time {
+  position: absolute;
+  top: 5px;
+  right: 0;
+}
+.progress-container {
+  position: relative;
+  padding: 7px 0;
+  margin-top: 15px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.progress-container:hover .progress__bar:after {
+  opacity: 1;
+}
+.progress {
+  height: 3px;
+  border-radius: 3px;
+  background: #dddddd;
+}
+.progress__bar,
+.progress__preload {
+  position: absolute;
+  width: 0;
+  height: 3px;
+  border-radius: 3px 0 0 3px;
+}
+.progress__bar {
+  background: #4682b4;
+  z-index: 1;
+}
+.progress__bar:after {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 10px;
+  height: 10px;
+  margin-top: -3px;
+  content: '';
+  border-radius: 6px;
+  background: #4682b4;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.progress__bar--active:after {
+  transform: scale(1.4);
+}
+.progress__preload {
+  background: #c4c4c4;
+  z-index: 0;
+}
+.ap__controls,
+.ap button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  position: relative;
+  display: block;
+  height: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: background .3s ease;
+}
+.ap__controls:active,
+.ap button:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+.ap__controls:hover,
+.ap button:hover {
+  opacity: 1;
+}
+.icon-play > path {
+  transition: all .3s ease;
+}
+.is-playing .icon-play {
+  fill: #4682b4;
+}
+.volume-btn {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+.volume {
+  position: absolute;
+  left: 50%;
+  bottom: 45px;
+  width: 40px;
+  margin-left: -20px;
+  height: 120px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.17, 0.72, 0.26, 1.23);
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  z-index: 88888;
+}
+.volume::before,
+.volume::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  border: 7px solid transparent;
+  border-top: 7px solid #f2f2f2;
+  left: 50%;
+  margin-left: -7px;
+}
+.volume::after {
+  bottom: -14px;
+  z-index: -1;
+  border-top: 7px solid #ccc;
 }
