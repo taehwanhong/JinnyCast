@@ -230,15 +230,12 @@ body {
   overflow: hidden;
 }
 header {
-  height: 8%;
+  height: 50px;
 }
 #wrapper {
   display: flex;
   height: 80%;
   overflow: hidden;
-}
-footer {
-  height: 20%;
 }
 #main {
   display: flex;
@@ -386,21 +383,16 @@ footer {
   background: #fff;
   box-shadow: -3px -7px 54px -13px rgba(0, 0, 0, 0.59);
 }
-/*-----------------------
-    Audio Player - AP
-------------------------*/
 .ap {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 50px;
   font-family: inherit;
   font-size: 14px;
   user-select: none;
-  border-top: 1px solid #ccc;
-  background: #f2f2f2;
+  background: #ffffff;
   box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
   z-index: 99999;
 }
@@ -408,6 +400,11 @@ footer {
   display: flex;
   max-width: 1440px;
   margin: auto;
+  padding: 2rem 0rem 0 3rem;
+}
+.close-btn {
+  float: right;
+  margin: 1rem 1rem 0 0 !important;
 }
 .ap__item {
   display: flex;
@@ -415,9 +412,14 @@ footer {
   justify-content: center;
   align-items: center;
 }
+.ap__item--settings,
+.ap__item--playback {
+  justify-content: flex-end;
+}
 .ap__item--playback > .ap__controls,
 .ap__item--settings > .ap__controls {
-  flex: 0 25%;
+  margin-left: 1rem;
+  font-size: 0.9rem;
 }
 @keyframes fs {
   0% {
@@ -431,22 +433,20 @@ footer {
 }
 .ap__item--track {
   flex: 1 40%;
-  padding: 0 20px;
+  padding: 0rem 3rem 2rem 3rem;
+  display: flex;
 }
 .track {
   position: relative;
-  width: 100%;
+  width: 70%;
   align-self: flex-start;
   padding: 5px 0 0;
 }
 .track__title {
-  position: absolute;
-  width: 100%;
+  margin-left: 1.5rem;
+  font-weight: bolder;
+  font-size: 1.0rem;
   overflow: hidden;
-  padding-right: 80px;
-  text-align: left;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 .track__time {
   position: absolute;
@@ -463,6 +463,11 @@ footer {
 .progress-container:hover .progress__bar:after {
   opacity: 1;
 }
+.track__time--current,
+.track__time--duration {
+  padding: 7px 0;
+  margin-top: 15px;
+}
 .progress {
   height: 3px;
   border-radius: 3px;
@@ -476,7 +481,7 @@ footer {
   border-radius: 3px 0 0 3px;
 }
 .progress__bar {
-  background: #4682b4;
+  background: #e91e63;
   z-index: 1;
 }
 .progress__bar:after {
@@ -488,7 +493,7 @@ footer {
   margin-top: -3px;
   content: '';
   border-radius: 6px;
-  background: #4682b4;
+  background: #e91e63;
   opacity: 0;
   transition: opacity .3s ease;
 }
@@ -506,26 +511,30 @@ footer {
   border: 0;
   outline: 0;
   background: transparent;
+  font-size: 1rem;
   position: relative;
   display: block;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   text-align: center;
   cursor: pointer;
   transition: background .3s ease;
 }
 .ap__controls:active,
 .ap button:active {
-  background: rgba(0, 0, 0, 0.1);
+  background: #e91e63;
+  border-radius: 50%;
 }
 .ap__controls:hover,
 .ap button:hover {
   opacity: 1;
+  border-radius: 50%;
 }
 .icon-play > path {
   transition: all .3s ease;
 }
 .is-playing .icon-play {
-  fill: #4682b4;
+  color: #e91e63;
 }
 .volume-btn {
   display: block;
@@ -535,7 +544,7 @@ footer {
 .volume {
   position: absolute;
   left: 50%;
-  bottom: 45px;
+  bottom: 195px;
   width: 40px;
   margin-left: -20px;
   height: 120px;
@@ -543,7 +552,7 @@ footer {
   visibility: hidden;
   transform: translateY(10px);
   transition: all 0.3s cubic-bezier(0.17, 0.72, 0.26, 1.23);
-  background: #f2f2f2;
+  background: #ffffff;
   border: 1px solid #ccc;
   border-radius: 1px;
   z-index: 88888;
@@ -554,7 +563,7 @@ footer {
   position: absolute;
   bottom: -12px;
   border: 7px solid transparent;
-  border-top: 7px solid #f2f2f2;
+  border-top: 7px solid #ffffff;
   left: 50%;
   margin-left: -7px;
 }
@@ -562,4 +571,58 @@ footer {
   bottom: -14px;
   z-index: -1;
   border-top: 7px solid #ccc;
+}
+@keyframes eq {
+  0% {
+    height: 3px;
+  }
+  50% {
+    height: 20px;
+  }
+  100% {
+    height: 3px;
+  }
+}
+.eq {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.eq__bar {
+  width: 4px;
+  background: #ffffff;
+  filter: drop-shadow(0 0 5px #ffffff);
+}
+.eq__bar:nth-child(1) {
+  animation: eq 0.8s ease-in-out infinite 0s;
+}
+.eq__bar:nth-child(2) {
+  animation: eq 0.8s ease-in-out infinite 0.2s;
+}
+.eq__bar:nth-child(3) {
+  animation: eq 0.8s ease-in-out infinite 0.4s;
+}
+.h-hide {
+  display: none;
+}
+.h-show {
+  display: block;
+}
+.ap__videoImage {
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: relative;
+  vertical-align: middle;
+}
+.ap__item--title {
+  justify-content: flex-start !important;
+}
+.ap__videoTitle {
+  margin-left: 1.5rem;
+  font-weight: bolder;
+  font-size: 1.0rem;
 }
