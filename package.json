@@ -1,0 +1,32 @@
+{
+  "name": "jinny-cast",
+  "version": "0.0.0",
+  "dependencies": {
+    "browserify": "~2.36.1",
+    "less": "~1.5.1"
+  },
+  "devDependencies": {
+    "watchify": "~0.4.1",
+    "catw": "~0.2.0"
+  },
+  "scripts": {
+    "watch-css": "catw -c 'lessc -' 'static/less/main.less' -o dist/css/main.css -v",
+    "watch-js": "watchify static/js/*.js -o dist/js/search.js -dv",
+    "watch": "npm run watch-css & npm run watch-js",
+    "build-css": "catw -c 'lessc -' 'static/less/main.less' > dist/css/main.css",
+    "build-js": "browserify static/js/*.js > dist/js/search.js",
+    "build": "npm run build-css && npm run build-js"
+  },
+  "description": "",
+  "main": "search.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taehwanhong/JinnyCast.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taehwanhong/JinnyCast/issues"
+  },
+  "homepage": "https://github.com/taehwanhong/JinnyCast#readme"
+}
