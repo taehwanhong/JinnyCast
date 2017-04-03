@@ -42,20 +42,6 @@
                     </div>
                     <!-- 검색목록 추가--> 
                     <ul class="searchList">
-                           <li>
-                            <button class="icon_btn"><i class="la la-headphones"></i></button>
-                            <div class="videoInfo">
-                                <span class="videoTitle">아이유 좋은 날</span>
-                            </div>
-                            <button class="addVideo icon_btn"><i class="la la-minus-circle"></i></button>
-                        </li>
-                         <li>
-                            <button class="icon_btn"><i class="la la-headphones"></i></button>
-                            <div class="videoInfo">
-                                <span class="videoTitle">아이유 좋은 날</span>
-                            </div>
-                            <button class="addVideo icon_btn"><i class="la la-minus-circle"></i></button>
-                        </li>
                     </ul>
                     <!-- 페이지번호 --> 
                     <div class="pagination"></div>
@@ -145,20 +131,18 @@
 
         </div>
         <!-- javascript -->
-        <script src="static/js/auth.js"></script>
-        <script src="static/js/player.js"></script>
+       
         <script src="static/js/audioPlayer.js"></script>
         <script src="static/js/search.js"></script>
-        <script src="static/js/Youtubesearch.js"></script>
         <script src="//code.jquery.com/jquery.min.js"></script>
         <!-- 우측 앨범을 앨범에 있는 리스트를 불러옵니다. -->
         <script type="template" id="selectedVideo">
             <li>
-                <button class="icon_btn"><i class="la la-headphones"></i></button>
+                <button class="playIcon icon_btn"><i class="la la-headphones"></i></button>
                 <div class="videoInfo">
                     <span class="videoTitle">{videoTitle}</span>
                 </div>
-                <button class="addVideo icon_btn"><i class="la la-minus-circle"></i></button>
+                <button class="deleteIcon icon_btn"><i class="la la-minus-circle"></i></button>
             </li>
         </script>
         <!-- youtube 키워드 검색한 리스트를 불러옵니다.-->
@@ -169,7 +153,7 @@
                     <span class="videoTitle">{videoTitle}</span>
                     <span class="videoViews">{videoViews}</span>
                 </div>
-                <button class="removeVideo icon_btn"><i class="la la-plus-circle"></i></button>
+                <button class="pl-list__add icon_btn"><i class="la la-plus-circle"></i></button>
             </li>
         </script>
     </body>
