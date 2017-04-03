@@ -4,6 +4,7 @@ nameSpace.$getval = '';
 nameSpace.getvideoId = [];
 nameSpace.playList = [];
 nameSpace.jdata = [];
+nameSpace.albumStorage = localStorage;
 ///////////// NAME SPACE END ///////////////
 
 //DEVMODE/////////// NAV control START ////////////
@@ -12,27 +13,25 @@ var nav = function() {
     //get each btn in nav with dom delegation with jquery and event propagation
     $(".nav_parent").on("click", "li", function(event) {
         event.preventDefault(); //bubbling prevent
-        var target = event.currentTarget;
-        // target =
-        // if (event.currentTarget == "li.")
-        console.log(target);
+        var className = $(this).attr('class');
+        console.log(className);
+        if (className == "album_btn") {
+            $(".searchList").hide(); //검색 결과 Clear
+            $(".addNewMedia").hide(); //검색 창 Clear
+        } else if (className == "popular_btn") {
+            console.log("POPULAR.....?");
+            $(".searchList").hide(); //검색 결과 Clear
+            $(".addNewMedia").hide(); //검색 창 Clear
+        } else {
+            console.log("SEARCH BTN!!!!")
+            $(".searchList").show(); //검색 결과 Clear
+            $(".addNewMedia").show(); //검색 창 Clear
+        }
     });
 };
-
-
-/*<ul id="nav_parent">
-                 <li class="search_btn"><i class="la la-search"></i><span>Search</span></li>
-                 <li class="album_btn"><i class="la la-music"></i><span>My Album</span></li>
-                 <li class="popular_btn"><i class="la la-heart-o"></i><span>popular</span></li>
-                 <li class="about_btn"><i class="la la-info-circle"></i><span>About<span></li>
-             </ul>*/
-
-nav();
 //DEVMODE/////////// NAV control END ////////////
 
-
-
-
+nav(); //nav 실행
 
 ///////////// SEARCH API START /////////////////
 var fnGetList = function(sGetToken) {
@@ -92,9 +91,7 @@ var searchResultView = function() {
             .replace("{videoTitle}", nameSpace.jdata.items[i].snippet.title)
             .replace("{videoViews}", "TBD")
             .replace("{id}", i);
-
         searchResultList = searchResultList + adaptTemplate;
-        console.log();
     }
     getSearchListDOM.innerHTML = searchResultList;
 };
@@ -106,8 +103,6 @@ var searchResultView = function() {
 var playVideoSelect = function() {
     $(".searchList").on("click", "li", function() { // 검색된 list click했을경우.
         var tagId = $(this).attr('id');
-        console.log(tagId);
-        console.log(nameSpace.getvideoId[tagId]);
         $(".videoPlayer").empty(); //player Dom초기화
         $(".videoPlayer").append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[tagId] + "'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
     });
@@ -116,10 +111,13 @@ var playVideoSelect = function() {
 
 //DEVMODE/////////// ADD PLAY LIST TO ALBUM START /////////////////
 var addPlayList = function() {
-    $(".searchList li").on("click", "button", function() { // 검색된 list click했을경우.
+    $(".searchVideo li button").on("click", "button", function() { // 검색된 list click했을경우.
+        console.log("AAAA");
         var tagId = $(this).attr('id');
-        nameSpace.playList.push(nameSpace.getvideoId[tagId]);
-        console.log(nameSpace.playList);
+        // var tagId = $(this).attr('id');
+        localStorage.setItem();
+
+        console.log($(this));
     });
 };
 //DEVMODE/////////// ADD PLAY LIST TO ALBUM END /////////////////
