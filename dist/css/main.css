@@ -236,9 +236,11 @@ header {
   display: flex;
   overflow: hidden;
 }
+.playControl {
+  height: 85px;
+}
 #main {
   display: flex;
-  min-height: 100%;
   width: 93%;
 }
 nav {
@@ -314,9 +316,6 @@ nav span {
   height: 45%;
   overflow-y: scroll;
 }
-.userPlaylist li:hover {
-  background: #f5f5f5;
-}
 .bottom_line {
   border-bottom: 1px solid #f5f5f5;
 }
@@ -341,13 +340,6 @@ li.videoDetail {
 }
 .userPlaylist {
   border-right: 1px solid #e0e0e0;
-}
-.userPlaylist li {
-  height: 2rem;
-  display: flex;
-  position: relative;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid #f5f5f5;
 }
 .videoImage {
   border-radius: 50%;
@@ -653,25 +645,6 @@ button.ap__controls.ap__controls--repeat.is-active svg {
 /*-----------------------
     Playlist Player - PL
 ------------------------*/
-.pl-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 80px;
-  left: 0;
-  overflow: auto;
-  font-family: inherit;
-  font-size: 14px;
-  background: #ffffff;
-  z-index: 77777;
-}
-.pl-ul {
-  width: 100%;
-  max-width: 550px;
-  margin: 0 auto;
-  padding: 30px 10px 100px 10px;
-}
 .pl-list {
   display: flex;
   align-items: center;
@@ -698,10 +671,11 @@ button.ap__controls.ap__controls--repeat.is-active svg {
   height: 0;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
-  border-left: 8px solid #555;
+  border-left: 8px solid #e0e0e0;
 }
 .pl-list__title {
   overflow: hidden;
+  font-size: 0.8rem;
   padding-right: 10px;
   cursor: pointer;
   text-align: left;
@@ -731,6 +705,9 @@ button.ap__controls.ap__controls--repeat.is-active svg {
 }
 .pl-list--current svg {
   fill: #ffffff;
+}
+.pl-list--current button {
+  display: none;
 }
 .pl-list--current .pl-list__eq {
   display: block;
