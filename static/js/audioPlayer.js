@@ -8,6 +8,7 @@ var AudioPlayer = (function() {
   var
   docTitle = document.title,
   player   = document.getElementById('ap'),
+  playerContainer = document.querySelector('.userPlaylist'),
   playBtn,
   playSvg,
   playSvgPath,
@@ -39,7 +40,7 @@ var AudioPlayer = (function() {
   tplList =
             '<li class="pl-list" data-track="{count}">'+
               '<div class="pl-list__track">'+
-                '<div class="pl-list__icon"></div>'+
+                ' <button class="icon_btn"><i class="la la-headphones"></i></button>'+
                 '<div class="pl-list__eq">'+
                   '<div class="eq">'+
                     '<div class="eq__bar"></div>'+
@@ -245,8 +246,7 @@ var AudioPlayer = (function() {
         'innerHTML': '<ul class="pl-ul">' + (!isEmptyList() ? html.join('') : '<li class="pl-list--empty">PlayList is empty</li>') + '</ul>'
       });
 
-      player.parentNode.insertBefore(pl, player.nextSibling);
-
+      playerContainer.insertBefore(pl, playerContainer.firstChild);
       plUl = pl.querySelector('.pl-ul');
       plLi = plUl.querySelectorAll('li');
 
@@ -446,7 +446,7 @@ var AudioPlayer = (function() {
 
   function plToggle() {
     plBtn.classList.toggle('is-active');
-    pl.classList.toggle('h-show');
+    //pl.classList.toggle('h-show');
   }
 
   function timeUpdate() {
@@ -739,7 +739,7 @@ var iconImage = 'http://funkyimg.com/i/21pX5.png';
 
 AP.init({
   playList: [
-    {'icon': iconImage, 'title': 'Hitman', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Hitman.mp3'},
+    {'icon': iconImage, 'title': 'Hitman', 'file': 'https://www.youtube.com/watch?v=ApbZfl7hIcg'},
     {'icon': iconImage, 'title': 'Dreamer', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Dreamer.mp3'},
     {'icon': iconImage, 'title': 'District Four', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/District%20Four.mp3'},
     {'icon': iconImage, 'title': 'Christmas Rap', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Christmas%20Rap.mp3'},
@@ -748,11 +748,14 @@ AP.init({
 });
 
 // TEST: update playlist
-document.getElementById('addSongs').addEventListener('click', function(e) {
-  e.preventDefault();
+//document.getElementById('addSongs').addEventListener('click', function(e) {
+//  e.preventDefault();
   AP.update([
     {'icon': iconImage, 'title': 'District Four', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/District%20Four.mp3'},
     {'icon': iconImage, 'title': 'Christmas Rap', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Christmas%20Rap.mp3'},
+    {'icon': iconImage, 'title': 'Rocket Power', 'file': 'https://www.youtube.com/watch?v=ApbZfl7hIcg'},
     {'icon': iconImage, 'title': 'Rocket Power', 'file': 'https://www.youtube.com/watch?v=ApbZfl7hIcg'}
   ]);
-})
+//})
+
+AP.update([])
