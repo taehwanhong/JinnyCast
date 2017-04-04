@@ -15,3 +15,4 @@ Youtube 앨범 만들기 서비스
 [https://docs.google.com/presentation/d/1pYOOLWBS6Ywwv8EPSftxA9uMSa1-VQpGaeahmXqDNRE/embed?start=false&loop=false&delayms=3000]
 
 ### DEV history
+1. beta Django branch start.0404
