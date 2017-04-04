@@ -1,21 +1,3 @@
-// window resize 
-
-
-window.addEventListener('resize',function(){
-  resizeMainHeight();
-});
-
-resizeMainHeight();
-function resizeMainHeight(){
-  var headerHeight = 50;
-  var audioPlayerHeight = 80;
-  var inputBoxHeight = 45;
-  document.getElementById("main").style.height = window.innerHeight - headerHeight - audioPlayerHeight +'px';
-  document.querySelector(".searchList").style.height = window.innerHeight - headerHeight - audioPlayerHeight - inputBoxHeight + 'px';
-}
-
-
-
 
 
 (function(window, undefined) {

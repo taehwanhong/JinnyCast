@@ -42,8 +42,7 @@ var fnGetList = function(sGetToken) {
     }
     //Cleansing Dom, VideoId
     nameSpace.getvideoId = []; //getvideoId array초기화
-    $(".searchList").empty(); //검색 결과 View초기화
-    // $(".nav_view").empty();
+    // $(".searchList").empty(); //검색 결과 View초기화
     $(".videoPlayer").empty(); //player Dom초기화
 
     //querysection//
@@ -68,11 +67,10 @@ var fnGetList = function(sGetToken) {
             }).promise().done(function() {
                 // console.log(nameSpace.getvideoId[0]);
                 $(".videoPlayer").append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[0] + "'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
-                playVideoSelect();
+                //playVideoSelect();
                  if (jdata.nextPageToken) {
                      getMoreSearchResult(jdata.nextPageToken);
                 }
-
             });
         },
         error: function(xhr, textStatus) {
@@ -88,7 +86,7 @@ var fnGetList = function(sGetToken) {
 var getMoreSearchResult = function(nextPageToken){
     $(".searchList").scroll(function () {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-            // fnGetList(nextPageToken);
+            fnGetList(nextPageToken);
         }
     });
 };
@@ -100,9 +98,8 @@ var getMoreSearchResult = function(nextPageToken){
 //////////// SEARCH RESULT VIEW START ///////////////
 var searchResultView = function() {
     var searchResultList = '';
-    var getSearchListDOM = document.querySelector('.searchList');
     for (var i = 0; i < nameSpace.jdata.items.length; i++) {
-        var getTemplate = document.querySelector('#searchVideo'); //template queryselect
+        var getTemplate = $('#searchVideo')[0]; //template queryselect
         var getHtmlTemplate = getTemplate.innerHTML; //get html in template
         var adaptTemplate = getHtmlTemplate.replace("{videoImage}", nameSpace.jdata.items[i].snippet.thumbnails.default.url)
             .replace("{videoTitle}", nameSpace.jdata.items[i].snippet.title)
@@ -110,9 +107,10 @@ var searchResultView = function() {
             .replace("{id}", i);
         searchResultList = searchResultList + adaptTemplate;
     }
-    getSearchListDOM.innerHTML = searchResultList;
+    $('.searchList').empty().append(searchResultList);
 };
-// $(".searchList").append("<li class='box' id='" + i + "'><img src='" + jdata.items[i].snippet.thumbnails.high.url + "' width = 20px>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
+
+
 //////////// SEARCH RESULT VIEW END ///////////////
 
 
@@ -141,19 +139,19 @@ var addPlayList = function() {
 
 
 
-// Layout 변경
-window.addEventListener('resize',function(){
-  resizeMainHeight();
-});
+// // Layout 변경
+// window.addEventListener('resize',function(){
+//   resizeMainHeight();
+// });
 
-resizeMainHeight();
-function resizeMainHeight(){
-  var headerHeight = 50;
-  var audioPlayerHeight = 80;
-  var inputBoxHeight = 45;
-  document.getElementById("main").style.height = window.innerHeight - headerHeight - audioPlayerHeight +'px';
-  document.querySelector(".searchList").style.height = window.innerHeight - headerHeight - audioPlayerHeight - inputBoxHeight + 'px';
-}
+// resizeMainHeight();
+// function resizeMainHeight(){
+//   var headerHeight = 50;
+//   var audioPlayerHeight = 80;
+//   var inputBoxHeight = 45;
+//   document.getElementById("main").style.height = window.innerHeight - headerHeight - audioPlayerHeight +'px';
+//   document.querySelector(".searchList").style.height = window.innerHeight - headerHeight - audioPlayerHeight - inputBoxHeight + 'px';
+// }
 
 
 
