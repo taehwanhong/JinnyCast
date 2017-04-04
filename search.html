@@ -134,7 +134,7 @@
         <!-- javascript -->
        
         <script src="static/js/audioPlayer.js"></script>
-        <script src="static/js/search.js"></script>
+        <!--<script src="static/js/search.js"></script>-->
         <script src="static/js/search-1.js"></script>
         <script src="//code.jquery.com/jquery.min.js"></script>
         <!-- 우측 앨범을 앨범에 있는 리스트를 불러옵니다. -->
@@ -149,7 +149,7 @@
         </script>
         <!-- youtube 키워드 검색한 리스트를 불러옵니다.-->
         <script type="template" id="searchVideo">
-            <li class="videoDetail" id="{id}">
+            <li class="videoDetail" data-id="{videoId}">
                 <img class="videoImage" src="{videoImage}" />
                 <div class="videoInfo">
                     <span class="videoTitle">{videoTitle}</span>

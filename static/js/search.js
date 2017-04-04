@@ -89,7 +89,7 @@ var getMoreSearchResult = function(nextPageToken){
             fnGetList(nextPageToken);
         }
     });
-};
+}
 
 
 
