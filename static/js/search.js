@@ -32,7 +32,10 @@ var nav = function() {
 //DEVMODE/////////// NAV control END ////////////
 
 nav(); //nav 실행
+<<<<<<< HEAD
 
+=======
+>>>>>>> fdaf91354fc34fc6746c1954f08a806fc1976453
 ///////////// SEARCH API START /////////////////
 var fnGetList = function(sGetToken) {
     nameSpace.$getval = $("#search_box").val();
@@ -43,17 +46,16 @@ var fnGetList = function(sGetToken) {
     }
     //Cleansing Dom, VideoId
     nameSpace.getvideoId = []; //getvideoId array초기화
-    $(".searchList").empty(); //검색 결과 View초기화
-    // $(".nav_view").empty();
+    // $(".searchList").empty(); //검색 결과 View초기화
     $(".videoPlayer").empty(); //player Dom초기화
 
     //querysection//
     //15개씩
 
     var sTargetUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&maxResults=15&type=video" + "&q=" + encodeURIComponent(nameSpace.$getval) + "&key=AIzaSyDjBfDWFgQa6bdeLc1PAM8EoDAFB_CGYig";
-
     if (sGetToken) {
         sTargetUrl += "&pageToken=" + sGetToken;
+        console.log(sTargetUrl);
     }
 
     $.ajax({
@@ -62,13 +64,17 @@ var fnGetList = function(sGetToken) {
         dataType: "jsonp",
         success: function(jdata) {
             nameSpace.jdata = jdata; //jdata.
+            
             searchResultView();
             $(jdata.items).each(function(i) {
                 nameSpace.getvideoId.push(jdata.items[i].id.videoId); //nameSpace.getvideoId에 검색된 videoID 배열로 추가
             }).promise().done(function() {
-                console.log(nameSpace.getvideoId[0]);
+                // console.log(nameSpace.getvideoId[0]);
                 $(".videoPlayer").append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[0] + "'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>");
-                playVideoSelect();
+                //playVideoSelect();
+                 if (jdata.nextPageToken) {
+                     getMoreSearchResult(jdata.nextPageToken);
+                }
             });
         },
         error: function(xhr, textStatus) {
@@ -80,12 +86,24 @@ var fnGetList = function(sGetToken) {
 };
 ///////////// SEARCH API END ///////////////////
 
+//스크롤 다운시 함수 실행하기.
+var getMoreSearchResult = function(nextPageToken){
+    $(".searchList").scroll(function () {
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+            fnGetList(nextPageToken);
+        }
+    });
+};
+
+
+
+
+    
 //////////// SEARCH RESULT VIEW START ///////////////
 var searchResultView = function() {
     var searchResultList = '';
-    var getSearchListDOM = document.querySelector('.searchList');
     for (var i = 0; i < nameSpace.jdata.items.length; i++) {
-        var getTemplate = document.querySelector('#searchVideo'); //template queryselect
+        var getTemplate = $('#searchVideo')[0]; //template queryselect
         var getHtmlTemplate = getTemplate.innerHTML; //get html in template
         var adaptTemplate = getHtmlTemplate.replace("{videoImage}", nameSpace.jdata.items[i].snippet.thumbnails.default.url)
             .replace("{videoTitle}", nameSpace.jdata.items[i].snippet.title)
@@ -93,9 +111,10 @@ var searchResultView = function() {
             .replace("{id}", i);
         searchResultList = searchResultList + adaptTemplate;
     }
-    getSearchListDOM.innerHTML = searchResultList;
+    $('.searchList').empty().append(searchResultList);
 };
-// $(".searchList").append("<li class='box' id='" + i + "'><img src='" + jdata.items[i].snippet.thumbnails.high.url + "' width = 20px>" + this.snippet.title + "<button id='" + i + "'type='button' onclick='addPlayList()'>add</button></li>"); //list보여주기
+
+
 //////////// SEARCH RESULT VIEW END ///////////////
 
 
@@ -121,3 +140,22 @@ var addPlayList = function() {
     });
 };
 //DEVMODE/////////// ADD PLAY LIST TO ALBUM END /////////////////
+
+
+
+// // Layout 변경
+// window.addEventListener('resize',function(){
+//   resizeMainHeight();
+// });
+
+// resizeMainHeight();
+// function resizeMainHeight(){
+//   var headerHeight = 50;
+//   var audioPlayerHeight = 80;
+//   var inputBoxHeight = 45;
+//   document.getElementById("main").style.height = window.innerHeight - headerHeight - audioPlayerHeight +'px';
+//   document.querySelector(".searchList").style.height = window.innerHeight - headerHeight - audioPlayerHeight - inputBoxHeight + 'px';
+// }
+
+
+
