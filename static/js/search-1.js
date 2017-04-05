@@ -1,10 +1,9 @@
 /* 2017. 03. 
-
 */
 
 
 /* ======= Responsive Web ======= */
-let hPX = {
+const hPX = {
     header: 50,
     audioPlayer : 80,
     inputBox : 45
@@ -20,7 +19,7 @@ window.addEventListener('resize',function(){
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    searchListView.callAjax();
+    searchListView.callSearchAPI();
     resizeMainHeight();
 });
 
@@ -69,10 +68,8 @@ const setTargetURL = function(keyword, sGetToken){
     if (sGetToken) {
         sTargetURL += "&pageToken=" + sGetToken;
     }
-    console.log(sTargetURL);
     return sTargetURL;
 }
-
 
 
 /* ======= Model ======= */
@@ -110,8 +107,8 @@ const searchListView = {
        this.content = util.$(".searchList");
        this.template = util.$("#searchVideo").innerHTML;
        this.render();
-       //this.preview();
-       this.moreResult();
+       this.preview();
+    
    },
    render: function(){
        videos = videoSearchListController.getAllVideos();
@@ -130,49 +127,51 @@ const searchListView = {
         this.content.insertAdjacentHTML('beforeend', sHTML);
     },
     
-    callAjax: function(){
+    callSearchAPI: function(){
         util.$(".goSearch").addEventListener('click', function(event) {
             util.$(".searchList").innerHTML = "";
             this.searchKeyword = util.$("#search_box").value;
             sUrl = setTargetURL(this.searchKeyword);
-            util.runAjax(sUrl, "load", main);
-            return function(){
-                
+            util.runAjax(sUrl, "load", function(){
+                json = JSON.parse(this.responseText);
+                youtubeAPISearchResult.init();
+                videoSearchListController.init();
                 videoSearchListController.setNextPageToken();
-
-                this.moreResult();
-            }
+                searchListView.moreResult();
+            });
         });
     },
-    moreResult: function(){
-        // videoSearchListController.setNextPageToken();
-        nextPageTok = videoSearchListController.getNextPageToken();
-        this.searchKeyword = util.$("#search_box").value;
-        sUrl = setTargetURL(this.searchKeyword, nextPageTok);
-        
-        $(".searchList").scroll(function () {
-            if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                util.runAjax(sUrl, "load", main);
-            }
-            return function(){
-                
-            };
-        });   
-    },
-    // preview: function(){
-    //     util.$(".searchList").addEventListener('click', function(evt) {
-    //        target = evt.target;
-    //        if (!element.classList.contains("videoName")){ target = target.parentNode; }
-    //        console.log(target);
-    //     });
-    // }
-    // <iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[0] + "'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>"
-}
 
-/* ======== Main ====== */
-function main(){
-    json = JSON.parse(this.responseText);
-    youtubeAPISearchResult.init();
-    videoSearchListController.init();
-    // searchListView.moreResult();
+    moreResult: function(){
+        this.searchKeyword = util.$("#search_box").value;
+        util.$(".searchList").addEventListener("scroll", function(){
+            if(this.scrollHeight - this.scrollTop === this.clientHeight) {
+                nextPageTok = videoSearchListController.getNextPageToken();
+                sUrl = setTargetURL(this.searchKeyword, nextPageTok);
+                util.runAjax(sUrl, "load",function(){
+                    json = JSON.parse(this.responseText);
+                    youtubeAPISearchResult.init();
+                    videoSearchListController.init();
+                    videoSearchListController.setNextPageToken();
+                });
+            }
+        });  
+    },
+    preview: function(){
+        const closeButton =  util.$(".previewModal i");
+        console.log(closeButton);
+     
+
+        util.$(".searchList").addEventListener('click', function(evt) {
+           target = evt.target;
+           if (target.tagName !== "li"){ target = util.$(".searchList li") }
+           util.$(".previewModal").classList.remove("hide");
+           util.$(".previewModal").innerHTML = util.$(".previewModal").innerHTML.replace("{data-id}", target.dataset.id);
+        });
+
+      
+        
+    }
+
 }
+ 
