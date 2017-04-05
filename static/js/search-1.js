@@ -4,13 +4,13 @@
 
 
 /* ======= Responsive Web ======= */
-var hPX = {
+let hPX = {
     header: 50,
     audioPlayer : 80,
     inputBox : 45
 }
 
-var resizeMainHeight = function(){
+const resizeMainHeight = function(){
   util.$("#main").style.height = window.innerHeight - hPX.header - hPX.audioPlayer +'px';
   util.$(".searchList").style.height = window.innerHeight - hPX.header - hPX.audioPlayer - hPX.inputBox + 'px';
 }
@@ -49,36 +49,34 @@ var util = {
     },
 }
 /* Youtube API Setting */
-var setTargetURL = function(keyword, sGetToken){
-    baseURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&'
+const setTargetURL = function(keyword, sGetToken){
+    
+    const baseURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&';
     var setting = {
-        order: 'relevance',
+        order: 'viewCount',
         maxResults: 15,
         type: 'video',
         q: keyword,
         key: 'AIzaSyDjBfDWFgQa6bdeLc1PAM8EoDAFB_CGYig'
     }
-    sTargetURL = Object.keys(setting).map(function(k) {
+ 
+    let sTargetURL = Object.keys(setting).map(function(k) {
         return encodeURIComponent(k) + "=" + encodeURIComponent(setting[k]);
     }).join('&')
     
     sTargetURL = baseURL + sTargetURL;
+    
     if (sGetToken) {
         sTargetURL += "&pageToken=" + sGetToken;
     }
+    console.log(sTargetURL);
     return sTargetURL;
 }
 
-/* ======== Main ====== */
-function main(){
-    json = JSON.parse(this.responseText);
-    youtubeAPISearchResult.init();
-    videoSearchListController.init();
-}
 
 
 /* ======= Model ======= */
-var youtubeAPISearchResult = {
+const youtubeAPISearchResult = {
     init: function(){
         this.allVideos = json; //처음 로딩될떄 모든 데이터를 가져옵니다.
     },
@@ -86,7 +84,7 @@ var youtubeAPISearchResult = {
     nextPageTokenNumer: null //다음 페이지 토큰 값;
 };
 
-var videoSearchListController = {
+const videoSearchListController = {
     init: function(){
         searchListView.init();
     },
@@ -107,21 +105,22 @@ var videoSearchListController = {
     }
 }
 
-var searchListView = {
+const searchListView = {
    init: function(){
        this.content = util.$(".searchList");
        this.template = util.$("#searchVideo").innerHTML;
        this.render();
-       this.event();
+       //this.preview();
+       this.moreResult();
    },
    render: function(){
        videos = videoSearchListController.getAllVideos();
        let sHTML = '';
-       for (var i = 0; i < videos.length; i++) {
-           var videoImageUrl =  videos[i].snippet.thumbnails.default.url;
-           var videoTitle =  videos[i].snippet.title;
-           var publishedAt = videos[i].snippet.publishedAt;
-           var videoId = videos[i].id.videoId
+       for (let i=0; i < videos.length; i++) {
+           let videoImageUrl =  videos[i].snippet.thumbnails.default.url;
+           let videoTitle =  videos[i].snippet.title;
+           let publishedAt = videos[i].snippet.publishedAt;
+           let videoId = videos[i].id.videoId
            sDom = this.template.replace("{videoImage}", videoImageUrl)
            .replace("{videoTitle}", videoTitle)
            .replace("{videoViews}", publishedAt)
@@ -130,28 +129,50 @@ var searchListView = {
         }
         this.content.insertAdjacentHTML('beforeend', sHTML);
     },
+    
     callAjax: function(){
         util.$(".goSearch").addEventListener('click', function(event) {
             util.$(".searchList").innerHTML = "";
-            this.searchKeyword = encodeURIComponent(util.$("#search_box").value);
+            this.searchKeyword = util.$("#search_box").value;
             sUrl = setTargetURL(this.searchKeyword);
             util.runAjax(sUrl, "load", main);
             return function(){
+                
                 videoSearchListController.setNextPageToken();
-            };
+
+                this.moreResult();
+            }
         });
     },
-    event: function(){
+    moreResult: function(){
+        // videoSearchListController.setNextPageToken();
         nextPageTok = videoSearchListController.getNextPageToken();
+        this.searchKeyword = util.$("#search_box").value;
         sUrl = setTargetURL(this.searchKeyword, nextPageTok);
+        
         $(".searchList").scroll(function () {
             if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                this.searchKeyword = encodeURIComponent(util.$("#search_box").value);
                 util.runAjax(sUrl, "load", main);
             }
             return function(){
-                videoSearchListController.setNextPageToken();
+                
             };
         });   
-    }
+    },
+    // preview: function(){
+    //     util.$(".searchList").addEventListener('click', function(evt) {
+    //        target = evt.target;
+    //        if (!element.classList.contains("videoName")){ target = target.parentNode; }
+    //        console.log(target);
+    //     });
+    // }
+    // <iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + nameSpace.getvideoId[0] + "'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>"
+}
+
+/* ======== Main ====== */
+function main(){
+    json = JSON.parse(this.responseText);
+    youtubeAPISearchResult.init();
+    videoSearchListController.init();
+    // searchListView.moreResult();
 }

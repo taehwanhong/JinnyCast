@@ -32,10 +32,6 @@ var nav = function() {
 //DEVMODE/////////// NAV control END ////////////
 
 nav(); //nav 실행
-<<<<<<< HEAD
-
-=======
->>>>>>> fdaf91354fc34fc6746c1954f08a806fc1976453
 ///////////// SEARCH API START /////////////////
 var fnGetList = function(sGetToken) {
     nameSpace.$getval = $("#search_box").val();

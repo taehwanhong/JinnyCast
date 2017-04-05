@@ -627,7 +627,7 @@ var AudioPlayer = (function() {
 
     playBtn.classList.remove('is-playing');
     playSvgPath.setAttribute('d', playSvg.getAttribute('data-play'));
-    volumeBtn.classList.remove('has-muted');
+    volumeBtn.classList.remove('has-m b        uted');
     plBtn.classList.remove('is-active');
     repeatBtn.classList.remove('is-active');
 
@@ -738,7 +738,7 @@ var iconImage = 'http://funkyimg.com/i/21pX5.png';
 
 AP.init({
   playList: [
-    {'icon': iconImage, 'title': 'Dreamer', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Dreamer.mp3'},
+    {'icon': iconImage, 'title': 'The Best of Bach', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Dreamer.mp3'},
     {'icon': iconImage, 'title': 'District Four', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/District%20Four.mp3'},
     {'icon': iconImage, 'title': 'Christmas Rap', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Christmas%20Rap.mp3'},
     {'icon': iconImage, 'title': 'Rocket Power', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Rocket%20Power.mp3'}
