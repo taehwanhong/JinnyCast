@@ -70,12 +70,12 @@
             }
         }
 
-        function updateVideo() {
-            var value = $('#embed').val().split('|');
-            $('#duration, #currenttime, #volume').text('?');
-            $('#state').text('loading...');
-            $('#error').text('');
-            loadVideo(value[0], value[1]);
-        }
+        // function updateVideo() {
+        //     var value = $('#embed').val().split('|');
+        //     $('#duration, #currenttime, #volume').text('?');
+        //     $('#state').text('loading...');
+        //     $('#error').text('');
+        //     loadVideo(value[0], value[1]);
+        // }
 
-        $(document).ready(updateVideo);
+        // $(document).ready(updateVideo);
