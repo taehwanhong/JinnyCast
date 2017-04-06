@@ -801,11 +801,19 @@ button.pl-list__add.icon_btn {
 
 .volume__bar {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #e91e63;
-    height: 50%;
+    vertical-align: middle;
+    left: 1em;
+    right: 1em;
+    bottom: 1em;
+    /*background: #e91e63;*/
+    /*height: 50%;*/
+    writing-mode: bt-lr;
+    /* IE */
+    -webkit-appearance: slider-vertical;
+    /* WebKit */
+    width: 8px;
+    height: 80%;
+    padding: 3 3px;
 }
 
 .icon-volume-off {
