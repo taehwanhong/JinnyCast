@@ -37,17 +37,10 @@ var util = {
     },
     $$: function(selector){
         return document.querySelectorAll(selector);
-    },
-    // getChildOrder: function(elChild) {
-    //     const elParent = elChild.parentNode;
-    //     let nIndex = Array.prototype.indexOf.call(elParent.children, elChild);
-    //     return nIndex;
-    // },
-    getObjValList: function(key, obj){
-        return obj.map(function (el) { return el[key]; });
-    },
+    }
 }
-/* Youtube API Setting */
+
+/* ======= Youtube API Setting ======= */
 const setTargetURL = function(keyword, sGetToken){
     
     const baseURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&';
@@ -77,7 +70,7 @@ const youtubeAPISearchResult = {
     init: function(){
         this.allVideos = json; //처음 로딩될떄 모든 데이터를 가져옵니다.
     },
-    selectedVideo: null, //선택한 값
+    selectedVideoID: null, //선택한 값
     nextPageTokenNumer: null //다음 페이지 토큰 값;
 };
 
@@ -94,11 +87,11 @@ const videoSearchListController = {
     setNextPageToken: function(){
         youtubeAPISearchResult.nextPageTokenNumer = youtubeAPISearchResult.allVideos.nextPageToken;
     },
-    getSelectedVideo: function(){
-
+    getSelectedVideoID: function(){
+        return youtubeAPISearchResult.selectedVideoID
     },
-    setSelectedVideo: function(){
-        
+    setSelectedVideo: function(id){
+        id = youtubeAPISearchResult.selectedVideoID
     }
 }
 
@@ -158,18 +151,27 @@ const searchListView = {
         });  
     },
     preview: function(){
-        const closeButton =  util.$(".previewModal i");
-        console.log(closeButton);
+        
+        // console.log(closeButton);
      
 
         util.$(".searchList").addEventListener('click', function(evt) {
-           target = evt.target;
-           if (target.tagName !== "li"){ target = util.$(".searchList li") }
+    
+           let li =  evt.target.closest("li");
+           if (!li) return;
+            util.$(".previewModal").dataset.id = '';
+            
            util.$(".previewModal").classList.remove("hide");
-           util.$(".previewModal").innerHTML = util.$(".previewModal").innerHTML.replace("{data-id}", target.dataset.id);
-        });
+           util.$(".previewModal").innerHTML = util.$(".previewModal").innerHTML.replace("{data-id}", li.dataset.id);
+          
+           util.$(".searchList").classList.add("modal-open");
 
-      
+        });
+        
+
+        util.$(".close-previewModal").addEventListener('click', function(evt){
+            console.log(evt.target);
+        });
         
     }
 
