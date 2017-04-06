@@ -270,10 +270,18 @@ nav {
 .albumTitleBar h1 {
   font-size: 1rem;
   text-align: center;
-  position: relative;
-  vertical-align: middle;
-  transform: translateY(-50%);
-  top: 50%;
+  height: 50px;
+  line-height: 50px;
+}
+.logo {
+  font-family: 'Fredoka One', cursive;
+  height: 50px;
+  line-height: 50px;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #e91e63;
+  position: absolute;
+  padding-left: 20px;
 }
 .centerInDiv {
   display: flex;
@@ -334,21 +342,30 @@ nav span {
 }
 .searchList {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .searchList li:hover {
   background: #f6f6f6;
   cursor: pointer;
 }
 li.videoDetail {
-  height: 4rem;
+  height: 5rem;
   display: flex;
   position: relative;
-  padding: 0.5rem 1rem;
+  width: 100%;
   border-bottom: 1px solid #f5f5f5;
+}
+.pl-list__add {
+  width: 10%;
 }
 .pl-list__add:hover i {
   color: #e91e63;
   cursor: pointer;
+}
+.contentsWrap {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  width: 90%;
 }
 .videoImage {
   border-radius: 50%;
@@ -377,6 +394,9 @@ li.videoDetail {
 .videoInfo:hover {
   cursor: pointer;
 }
+button.pl-list__add.icon_btn {
+  margin-right: 0;
+}
 .icon_btn {
   font-size: 1.5rem;
 }
@@ -397,21 +417,21 @@ li.videoDetail {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 300px;
-  height: 200px;
-  margin-left: -150px;
-  margin-top: -100px;
+  width: 400px;
+  height: 300px;
+  margin-left: -200px;
+  margin-top: -150px;
   background-color: #e91e63;
   text-align: center;
-  border-radius: 5px;
   /* needed styles for the overlay */
   z-index: 10;
   /* keep on top of other elements on the page */
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
 }
 .previewModal button {
-  font-size: 2rem;
-  float: right;
+  font-size: 1.6rem;
+  padding: 2px;
+  margin-right: 0;
   z-index: 99;
 }
 .previewModal button i {
@@ -419,6 +439,12 @@ li.videoDetail {
 }
 .previewModal button:hover {
   cursor: pointer;
+}
+.previewInfo {
+  float: right;
+}
+.previewModal h1 {
+  color: #fff;
 }
 /*-----------------------
     Audio Player - AP
@@ -441,12 +467,6 @@ li.videoDetail {
   display: flex;
   max-width: 1440px;
   margin: auto;
-}
-.close_btn {
-  z-index: 3;
-  position: fixed !important;
-  bottom: -10px;
-  font-size: 1rem;
 }
 .ap__hide {
   transform: translateY(80px);

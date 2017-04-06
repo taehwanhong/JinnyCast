@@ -100,7 +100,7 @@ const searchListView = {
        this.content = util.$(".searchList");
        this.template = util.$("#searchVideo").innerHTML;
        this.render();
-       this.preview();
+       this.showPreview();
     
    },
    render: function(){
@@ -150,30 +150,41 @@ const searchListView = {
             }
         });  
     },
-    preview: function(){
-        
-        // console.log(closeButton);
-     
-
+    showPreview: function(){
         util.$(".searchList").addEventListener('click', function(evt) {
-    
-           let li =  evt.target.closest("li");
-           if (!li) return;
-            util.$(".previewModal").dataset.id = '';
+            target = evt.target;
+            if (target.tagName === 'I'){
+                target = target.parentNode;
+                (console.log(target));
+            }
+            if (target.tagName !== "BUTTON"){ 
+                target = util.$(".videoInfo"); 
+                util.$(".previewModal").dataset.id = '';
+                util.$(".previewModal").classList.remove("hide");
+                sDom = util.$("#previewVideo").innerHTML;
+                sHTML = sDom.replace("{data-id}", target.dataset.id);
+                util.$(".previewModal").innerHTML = sHTML;
+                util.$(".searchList").classList.add("modal-open");
+                return (function() {
+                    this.hidePreview();
+                }).call(searchListView);
+            }
+            console.log(target);
+            // elem =  elem.closest(".videoInfo");  
+            // (console.log(elem));      
+            // if (!elem) return;
             
-           util.$(".previewModal").classList.remove("hide");
-           util.$(".previewModal").innerHTML = util.$(".previewModal").innerHTML.replace("{data-id}", li.dataset.id);
-          
-           util.$(".searchList").classList.add("modal-open");
-
         });
         
-
-        util.$(".close-previewModal").addEventListener('click', function(evt){
-            console.log(evt.target);
+    },
+    hidePreview: function(){
+        util.$(".close_btn").addEventListener('click', function(evt) {
+            let button =  evt.target.closest("button");
+            util.$(".previewModal").classList.add("hide");
+            util.$(".searchList").classList.remove("modal-open");
         });
-        
-    }
+    },
+    
 
 }
  

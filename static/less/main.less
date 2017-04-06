@@ -262,10 +262,21 @@ nav {
     h1 {
         font-size: 1rem;
         text-align: center;
-        .verticalCentered
+        height: @headerHeight;
+        line-height: @headerHeight;
     }
 }
 
+.logo {
+    font-family: 'Fredoka One', cursive;
+    height: @headerHeight;
+    line-height: @headerHeight;
+    align-items: center;
+    font-size: 1.2rem;
+    color: @theme-primary;
+    position: absolute;
+    padding-left: 20px;
+}
 
 .centerInDiv {
     display: flex;  
@@ -340,6 +351,7 @@ nav {
 
 .searchList {
     overflow-y: scroll;
+    overflow-x: hidden;
     li:hover{
         background: @plHoverColor;
         cursor: pointer;
@@ -348,15 +360,16 @@ nav {
 }
 
 li.videoDetail {
-    height: 4rem;
+    height: 5rem;
     display: flex;
     position: relative;
-    padding: 0.5rem 1rem;
- 
+    width: 100%;
     .bottom_line
     
 }
-
+.pl-list__add {
+    width: 10%;
+}
 .pl-list__add:hover i{
     color: @theme-primary;
     cursor: pointer;
@@ -370,6 +383,12 @@ li.videoDetail {
     //     position: relative;
     //     padding: 0.5rem 1rem;
     // }
+}
+
+.contentsWrap {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  width: 90%;
 }
 
 .videoImage {
@@ -397,6 +416,10 @@ li.videoDetail {
     cursor: pointer;
 }
 
+button.pl-list__add.icon_btn {
+  margin-right: 0;
+}
+
 .icon_btn {
     font-size: 1.5rem;
     i {
@@ -414,25 +437,29 @@ li.videoDetail {
     overflow: hidden;
 }
 
+@previewModalWidth: 400px;
+@previewModalHeight: 300px;
+
 .previewModal {
     /* some styles to position the modal at the center of the page */
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 300px;
-    height: 200px;
-    margin-left: -150px;
-    margin-top: -100px;
+    width: @previewModalWidth;
+    height: @previewModalHeight;
+    margin-left: -(@previewModalWidth/2);
+    margin-top: -(@previewModalHeight/2);
     background-color: @theme-primary;
     text-align: center;
-    border-radius: 5px;
   
     /* needed styles for the overlay */
     z-index: 10; /* keep on top of other elements on the page */
     box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
     button {
-        font-size: 2rem;
-        float: right;
+        font-size: 1.6rem;
+        padding: 2px;
+        margin-right: 0;
+        // float: right;
         z-index: 99;
         i {
           color: #fff;
@@ -442,8 +469,15 @@ li.videoDetail {
       cursor: pointer;
     }
 }
+.previewInfo {
+  float: right;
+}
 
-
+.previewModal h1{
+  color: #fff;
+  // transform: translateY(-50%);
+  // top: 50%;
+}
 /*-----------------------
     Audio Player - AP
 ------------------------*/
@@ -500,13 +534,13 @@ li.videoDetail {
 //     margin-right: @apPadding * 3;
 // }
 
-.close_btn {
-    // right: @apPadding;
-    z-index: 3;
-    position: fixed !important;
-    bottom: @apHeight - 50px - @apPadding;
-    font-size: 1rem;
-}
+// .close_btn {
+//     // right: @apPadding;
+//     z-index: 3;
+//     position: fixed !important;
+//     bottom: @apHeight - 50px - @apPadding;
+//     font-size: 1rem;
+// }
 
 .ap__hide {
   transform: translateY(@apHeight);
