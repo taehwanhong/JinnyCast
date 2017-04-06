@@ -9,19 +9,21 @@
         <link href='//maxcdn.icons8.com/fonts/line-awesome/css/line-awesome.min.css' rel='stylesheet' type='text/css'/>
         <link href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
+        <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
         <script src="//code.jquery.com/jquery.min.js"></script>
     </head>
 
     <body>
         <header class="albumTitleBar">
             <!-- 앨범제목입니다 -->
+            <div class="logo">JinnieCast</div>
             <h1>코딩할 때 듣는 음악</h1>
         </header>
         <div id="wrapper">
             <div id="main">
                 <section id="mediaPlayView">
                     <div class="videoPlayer">
-                        
+                        <!--<iframe width="100%" height="100%" src="https://www.youtube.com/embed/6JQm5aSjX6g"></iframe>-->
                     </div>
                     <!-- 플레이리스트 추가--> 
                     
@@ -35,30 +37,18 @@
                     <div class="addNewMedia">
                         <form name="form1" method="POST" onsubmit="return false;">
                             <input type="text" id="search_box" placeholder="Search your favorite music">
-                            <button onclick="fnGetList();"></button>
+                            <button class="goSearch"></button>
                         </form>
                         <div class="youtubeMedia">
                         </div>
                     </div>
                     <!-- 검색목록 추가--> 
                     <ul class="searchList">
-                           <li>
-                            <button class="icon_btn"><i class="la la-headphones"></i></button>
-                            <div class="videoInfo">
-                                <span class="videoTitle">아이유 좋은 날</span>
-                            </div>
-                            <button class="addVideo icon_btn"><i class="la la-minus-circle"></i></button>
-                        </li>
-                         <li>
-                            <button class="icon_btn"><i class="la la-headphones"></i></button>
-                            <div class="videoInfo">
-                                <span class="videoTitle">아이유 좋은 날</span>
-                            </div>
-                            <button class="addVideo icon_btn"><i class="la la-minus-circle"></i></button>
-                        </li>
                     </ul>
                     <!-- 페이지번호 --> 
-                    <div class="pagination"></div>
+                    <div class="previewModal hide">
+
+                    </div>
                 </section>
             </div>
             <nav>
@@ -67,7 +57,6 @@
                     <li class="album_btn"><i class="la la-music"></i><span>My Album</span></li>
                     <li class="popular_btn"><i class="la la-heart-o"></i><span>popular</span></li>
                 </ul>
-                <div class="pagination"></div>
             </nav>
         </div>
         <div class="playControl">
@@ -94,7 +83,7 @@
                         </button>
                     </div>
                     <div class="ap__item ap__item--track">
-                         <img class="track__image" src="https://i.ytimg.com/vi/d7zpnNkdQDM/hqdefault.jpg" />
+                         <img class="track__image" src="https://i.ytimg.com/vi/6JQm5aSjX6g/default.jpg" />
                         <div class="track">
                         <div class="track__title">Queue is empty</div>
                         <div class="track__time">
@@ -142,36 +131,52 @@
                 </div>
                 </div>
             </div>
-
         </div>
         <!-- javascript -->
-        <script src="static/js/auth.js"></script>
-        <script src="static/js/player.js"></script>
+       
         <script src="static/js/audioPlayer.js"></script>
-        <script src="static/js/search.js"></script>
-        <script src="static/js/Youtubesearch.js"></script>
+        <!--<script src="static/js/search.js"></script>-->
+        <script src="static/js/search-1.js"></script>
         <script src="//code.jquery.com/jquery.min.js"></script>
-        <!-- 우측 앨범을 앨범에 있는 리스트를 불러옵니다. -->
-        <script type="template" id="selectedVideo">
-            <li>
-                <button class="icon_btn"><i class="la la-headphones"></i></button>
-                <div class="videoInfo">
-                    <span class="videoTitle">{videoTitle}</span>
+        <!-- 플레이어에 비디오 추가 -->
+        <script type="template" id="playList">
+            <li class="pl-list pl-list--current" data-track="{data-track}" data-id="{data-id}">
+                <div class="pl-list__track">
+                    <button class="pl-list__play icon_btn"><i class="la la-headphones"></i></button>
+                    <div class="pl-list__eq">
+                        <div class="eq">
+                            <div class="eq__bar"></div>
+                            <div class="eq__bar"></div>
+                            <div class="eq__bar"></div>
+                        </div>
+                    </div>
                 </div>
-                <button class="addVideo icon_btn"><i class="la la-minus-circle"></i></button>
-            </li>
+                <div class="pl-list__title">{title}</div>
+                <button class="pl-list__remove icon_btn"><i class="la la-minus-circle"></i></button>
+            </li>            
         </script>
         <!-- youtube 키워드 검색한 리스트를 불러옵니다.-->
         <script type="template" id="searchVideo">
-            <li class="videoDetail" id="{id}">
-                <img class="videoImage" src="{videoImage}" />
-                <div class="videoInfo">
-                    <span class="videoTitle">{videoTitle}</span>
-                    <span class="videoViews">{videoViews}</span>
+            <li class="videoDetail">
+                <div class="contentsWrap">
+                    <img class="videoImage" src="{videoImage}" />
+                    <div class="videoInfo" data-id="{videoId}">
+                        <span class="videoTitle">{videoTitle}</span>
+                        <span class="videoViews">{videoViews}</span>
+                    </div>
                 </div>
-                <button class="removeVideo icon_btn"><i class="la la-plus-circle"></i></button>
+                <button class="pl-list__add icon_btn"><i class="la la-plus-circle"></i></button>
             </li>
         </script>
+        
+
+        <script type="template" id="previewVideo">
+            <div class="previewInfo">
+            <button class="close_btn"><i class="la la-times-circle"></i></button>
+            </div>
+            <iframe width='100%' height='100%' src='https://www.youtube.com/embed/{data-id}'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>
+        </script>
+
     </body>
 </body>
 </html>

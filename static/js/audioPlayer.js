@@ -1,3 +1,5 @@
+
+
 (function(window, undefined) {
 
 'use strict';
@@ -40,7 +42,7 @@ var AudioPlayer = (function() {
   tplList =
             '<li class="pl-list" data-track="{count}">'+
               '<div class="pl-list__track">'+
-                ' <button class="icon_btn"><i class="la la-headphones"></i></button>'+
+                ' <button class="pl-list__play icon_btn"><i class="la la-headphones"></i></button>'+
                 '<div class="pl-list__eq">'+
                   '<div class="eq">'+
                     '<div class="eq__bar"></div>'+
@@ -50,11 +52,8 @@ var AudioPlayer = (function() {
                 '</div>'+
               '</div>'+
               '<div class="pl-list__title">{title}</div>'+
-              '<button class="pl-list__remove">'+
-                '<svg fill="#000000" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">'+
-                    '<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>'+
-                    '<path d="M0 0h24v24H0z" fill="none"/>'+
-                '</svg>'+
+              '<button class="pl-list__remove icon_btn">'+
+                '<i class="la la-minus-circle"></i>'+
               '</button>'+
             '</li>',
   // settings
@@ -628,7 +627,7 @@ var AudioPlayer = (function() {
 
     playBtn.classList.remove('is-playing');
     playSvgPath.setAttribute('d', playSvg.getAttribute('data-play'));
-    volumeBtn.classList.remove('has-muted');
+    volumeBtn.classList.remove('has-m b        uted');
     plBtn.classList.remove('is-active');
     repeatBtn.classList.remove('is-active');
 
@@ -739,8 +738,7 @@ var iconImage = 'http://funkyimg.com/i/21pX5.png';
 
 AP.init({
   playList: [
-    {'icon': iconImage, 'title': 'Hitman', 'file': 'https://www.youtube.com/watch?v=ApbZfl7hIcg'},
-    {'icon': iconImage, 'title': 'Dreamer', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Dreamer.mp3'},
+    {'icon': iconImage, 'title': 'The Best of Bach', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Dreamer.mp3'},
     {'icon': iconImage, 'title': 'District Four', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/District%20Four.mp3'},
     {'icon': iconImage, 'title': 'Christmas Rap', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Christmas%20Rap.mp3'},
     {'icon': iconImage, 'title': 'Rocket Power', 'file': 'http://incompetech.com/music/royalty-free/mp3-royaltyfree/Rocket%20Power.mp3'}
@@ -758,4 +756,3 @@ AP.init({
   ]);
 //})
 
-AP.update([])

@@ -140,6 +140,7 @@ textarea {
   white-space: normal;
   background: none;
   line-height: 1;
+  outline: none;
 }
 /* Remove the stupid outer glow in Webkit */
 input:focus {
@@ -244,10 +245,12 @@ header {
   width: 93%;
 }
 nav {
+  background: #fff;
   width: 7%;
 }
 #mediaPlayView {
   width: 50%;
+  border-right: 1px solid #f5f5f5;
 }
 #editPlaylist {
   width: 50%;
@@ -267,10 +270,18 @@ nav {
 .albumTitleBar h1 {
   font-size: 1rem;
   text-align: center;
-  position: relative;
-  vertical-align: middle;
-  transform: translateY(-50%);
-  top: 50%;
+  height: 50px;
+  line-height: 50px;
+}
+.logo {
+  font-family: 'Fredoka One', cursive;
+  height: 50px;
+  line-height: 50px;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #e91e63;
+  position: absolute;
+  padding-left: 20px;
 }
 .centerInDiv {
   display: flex;
@@ -310,18 +321,20 @@ nav span {
 /* video */
 .videoPlayer {
   width: 100%;
-  height: 55%;
+  height: 50%;
 }
 .userPlaylist {
-  height: 45%;
+  height: 50%;
   overflow-y: scroll;
 }
 .bottom_line {
   border-bottom: 1px solid #f5f5f5;
 }
 #search_box {
-  height: 3rem;
+  height: 45px;
   width: 100%;
+  text-indent: 1.5rem;
+  font-size: 0.8rem;
   border-bottom: 1px solid #f5f5f5;
 }
 #search-box:focus {
@@ -329,17 +342,30 @@ nav span {
 }
 .searchList {
   overflow-y: scroll;
-  height: 100%;
+  overflow-x: hidden;
+}
+.searchList li:hover {
+  background: #f6f6f6;
+  cursor: pointer;
 }
 li.videoDetail {
-  height: 4rem;
+  height: 5rem;
   display: flex;
   position: relative;
-  padding: 0.5rem 1rem;
+  width: 100%;
   border-bottom: 1px solid #f5f5f5;
 }
-.userPlaylist {
-  border-right: 1px solid #e0e0e0;
+.pl-list__add {
+  width: 10%;
+}
+.pl-list__add:hover i {
+  color: #e91e63;
+  cursor: pointer;
+}
+.contentsWrap {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  width: 90%;
 }
 .videoImage {
   border-radius: 50%;
@@ -365,6 +391,12 @@ li.videoDetail {
   flex-direction: column;
   justify-content: center;
 }
+.videoInfo:hover {
+  cursor: pointer;
+}
+button.pl-list__add.icon_btn {
+  margin-right: 0;
+}
 .icon_btn {
   font-size: 1.5rem;
 }
@@ -374,10 +406,49 @@ li.videoDetail {
 .icon_btn:hover {
   color: #e91e63;
 }
-footer {
-  background: #fff;
-  box-shadow: -3px -7px 54px -13px rgba(0, 0, 0, 0.59);
+/*-----------------------
+    Video Preview
+------------------------*/
+.modal-open {
+  overflow: hidden;
 }
+.previewModal {
+  /* some styles to position the modal at the center of the page */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 300px;
+  margin-left: -200px;
+  margin-top: -150px;
+  background-color: #e91e63;
+  text-align: center;
+  /* needed styles for the overlay */
+  z-index: 10;
+  /* keep on top of other elements on the page */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+.previewModal button {
+  font-size: 1.6rem;
+  padding: 2px;
+  margin-right: 0;
+  z-index: 99;
+}
+.previewModal button i {
+  color: #fff;
+}
+.previewModal button:hover {
+  cursor: pointer;
+}
+.previewInfo {
+  float: right;
+}
+.previewModal h1 {
+  color: #fff;
+}
+/*-----------------------
+    Audio Player - AP
+------------------------*/
 .ap {
   position: fixed;
   left: 0;
@@ -396,12 +467,6 @@ footer {
   display: flex;
   max-width: 1440px;
   margin: auto;
-}
-.close_btn {
-  z-index: 3;
-  position: fixed !important;
-  bottom: -10px;
-  font-size: 1rem;
 }
 .ap__hide {
   transform: translateY(80px);
@@ -645,6 +710,10 @@ button.ap__controls.ap__controls--repeat.is-active svg {
 /*-----------------------
     Playlist Player - PL
 ------------------------*/
+.pl-ul {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
 .pl-list {
   display: flex;
   align-items: center;
@@ -703,10 +772,10 @@ button.ap__controls.ap__controls--repeat.is-active svg {
   background: #e91e63;
   color: #ffffff;
 }
-.pl-list--current svg {
-  fill: #ffffff;
+.pl-list--current .pl-list__title {
+  color: #fff;
 }
-.pl-list--current button {
+.pl-list--current .pl-list__play {
   display: none;
 }
 .pl-list--current .pl-list__eq {
