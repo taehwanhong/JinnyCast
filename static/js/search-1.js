@@ -251,14 +251,54 @@ const searchListView = {
         });
     },
 
-
-}
-
-var postAlbum = function() {
-
 }
 
 
+
+
+
+const createPlaylist = function() {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8080/bbs/",
+        "method": "POST",
+        "headers": {
+            "content-type": "application/json",
+            "authorization": "Basic YWRtaW46MTIzNHF3ZXI=",
+            "cache-control": "no-cache",
+            "postman-token": "9a0f3d07-f586-2e69-7249-37a5f66339c6"
+        },
+        "processData": false,
+        "data": "{\n  \"title\": \"videotitle\",\n  \"artist\": \"소녀시대\",\n  \"videoId\": \"xxxxxx\",\n  \"thumbnailUrl\": \"xxxxxxx\",\n  \"album\": \"firstalbum\"\n}"
+    }
+
+    $.ajax(settings).done(function(response) {
+        console.log(response);
+    });
+}
+
+
+const createAlbum = function() {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8080/album/",
+        "method": "POST",
+        "headers": {
+            "content-type": "application/json",
+            "authorization": "Basic YWRtaW46MTIzNHF3ZXI=",
+            "cache-control": "no-cache",
+            "postman-token": "0ae1a2b2-2b36-c487-2454-e4f21ff65560"
+        },
+        "processData": false,
+        "data": "  {\n    \"title\": \"title\",\n    \"user\": \"tiele\"\n  }"
+    }
+
+    $.ajax(settings).done(function(response) {
+        console.log(response);
+    });
+}
 
 // buttonLike.addEventListener("click", function(evt){
 //    let id = this.getAttribute('data-post-id');
