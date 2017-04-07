@@ -322,16 +322,9 @@ nav > ul > li:hover {
   cursor: pointer;
 }
 /* video */
-<<<<<<< HEAD
-.videoPlayer {
+#video {
   width: 100%;
   height: 50%;
-=======
-
-#video {
-    width: 100%;
-    height: 50%;
->>>>>>> e9c867f2487d0731413632bd744c7e2e4941f8a7
 }
 .userPlaylist {
   height: 50%;
@@ -553,19 +546,16 @@ button.pl-list__add.icon_btn {
 .progress-container:hover .progress__bar:after {
   opacity: 1;
 }
-<<<<<<< HEAD
 .progress {
   height: 3px;
   border-radius: 3px;
   background: #dddddd;
-=======
-
+}
 #currenttime {
-    width: 100%;
-    height: 3px;
-    border-radius: 3px;
-    background: #dddddd;
->>>>>>> e9c867f2487d0731413632bd744c7e2e4941f8a7
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+  background: #dddddd;
 }
 .progress__bar,
 .progress__preload {
@@ -678,32 +668,26 @@ button.pl-list__add.icon_btn {
   overflow: hidden;
 }
 .volume__bar {
-<<<<<<< HEAD
-  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   background: #e91e63;
   height: 50%;
+  position: absolute;
+  vertical-align: middle;
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  /*background: #e91e63;*/
+  /*height: 50%;*/
+  writing-mode: bt-lr;
+  /* IE */
+  -webkit-appearance: slider-vertical;
+  /* WebKit */
+  width: 8px;
+  height: 80%;
+  padding: 3 3px;
 }
-=======
-    position: absolute;
-    vertical-align: middle;
-    left: 1em;
-    right: 1em;
-    bottom: 1em;
-    /*background: #e91e63;*/
-    /*height: 50%;*/
-    writing-mode: bt-lr;
-    /* IE */
-    -webkit-appearance: slider-vertical;
-    /* WebKit */
-    width: 8px;
-    height: 80%;
-    padding: 3 3px;
-}
-
->>>>>>> e9c867f2487d0731413632bd744c7e2e4941f8a7
 .icon-volume-off {
   display: none;
 }

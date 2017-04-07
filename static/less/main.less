@@ -322,7 +322,7 @@ nav > ul > li:hover{
     // background: @theme-primary;
 }
 /* video */
-.videoPlayer {
+#video {
     width: 100%;
     height: 50%;
 }
@@ -640,6 +640,14 @@ button.pl-list__add.icon_btn {
   border-radius: @barSize;
   background: @barBG;
 }
+
+#currenttime {
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+background: #dddddd;
+}
+
 .progress__bar,
 .progress__preload {
   position: absolute;
@@ -770,6 +778,20 @@ button.pl-list__add.icon_btn {
   bottom: 0;
   background: @progressBG;
   height: 50%;
+  position: absolute;
+  vertical-align: middle;
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  /*background: #e91e63;*/
+  /*height: 50%;*/
+  writing-mode: bt-lr;
+  /* IE */
+  -webkit-appearance: slider-vertical;
+  /* WebKit */
+  width: 8px;
+  height: 80%;
+  padding: 3 3px;
 }
 .icon-volume-off {
   display: none;

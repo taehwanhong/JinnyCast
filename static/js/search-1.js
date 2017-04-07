@@ -161,7 +161,7 @@ const searchListView = {
        this.content = util.$(".searchList");
        this.template = util.$("#searchVideo").innerHTML;
        this.render();
-       this.showPreview();
+       this.events();
     
    },
    render: function(){
@@ -192,13 +192,13 @@ const searchListView = {
                 youtubeAPISearchResult.init();
                 videoSearchListController.init();
                 videoSearchListController.setNextPageToken();
-                searchListView.moreResult();
+                searchListView.moreSearchResult();
                 util.timeAgo();
             });
         });
     },
 
-    moreResult: function(){
+    moreSearchResult: function(){
         this.searchKeyword = util.$("#search_box").value;
         util.$(".searchList").addEventListener("scroll", function(){
             if(this.scrollHeight - this.scrollTop === this.clientHeight) {
@@ -216,7 +216,7 @@ const searchListView = {
             }
         });  
     },
-    showPreview: function(){
+    events: function(){
         util.$(".searchList").addEventListener('click', function(evt) {
             target = evt.target;
             if (target.tagName === 'I'){
@@ -253,4 +253,46 @@ const searchListView = {
     
 
 }
- 
+
+//  runAjax : function(url, listener, reqFunc){
+//         let oReq = new XMLHttpRequest();
+//         oReq.addEventListener(listener, reqFunc);
+//         oReq.open("GET", url);
+//         oReq.send();
+//     },
+    
+
+
+// buttonLike.addEventListener("click", function(evt){
+//    let id = this.getAttribute('data-post-id');
+//    let xhr = new XMLHttpRequest();
+
+//     if (buttonLike.classList.contains('blog-like')) {
+//         var url = '/like_count_blog/?post_id='+id;
+//     }
+//     if (buttonLike.classList.contains('project-like')) {
+//         var url = '/like_count_project/?project_id='+id;
+//     }
+
+//     xhr.open('GET', url);
+//     xhr.onload = function() {
+//     if (xhr.status === 200) {
+//         likeData.innerHTML = xhr.responseText;
+//         toggleLikeIcon();
+//     }
+//     else {
+//         alert('Request failed.  Returned status of ' + xhr.status);
+//     }
+// };
+// xhr.send();
+// });
+
+// function toggleLikeIcon(){
+//     for (let ele of icon){
+//         if (ele.style.display === 'none') {
+//             ele.style.display = 'block';
+//         } else {
+//             ele.style.display = 'none';
+//         }
+//     }
+// };

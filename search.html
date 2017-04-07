@@ -1,17 +1,101 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>JinnieCast</title>
-        <link rel="stylesheet" href="dist/css/main.css">
-        <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
-        <link href='//maxcdn.icons8.com/fonts/line-awesome/css/line-awesome.min.css' rel='stylesheet' type='text/css'/>
-        <link href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
-        <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
-        <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
-        <script src="//code.jquery.com/jquery.min.js"></script>
-    </head>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JinnieCast</title>
+    <link rel="stylesheet" href="dist/css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
+    <link href='//maxcdn.icons8.com/fonts/line-awesome/css/line-awesome.min.css' rel='stylesheet' type='text/css' />
+    <link href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="static/js/embedPlayer.js"></script>
+    <script src="static/js/youtube.js"></script>
+    <script type="text/javascript">
+        // <![CDATA[
+        function initEmbed() {
+            $(this).on('embedplayer:statechange', function(event) {
+                $('#state').text(event.state);
+            }).on('embedplayer:error', function(event) {
+                var message = event.error || '';
+                if (event.title) {
+                    message += " " + event.title;
+                } else if (event.message) {
+                    message += " " + event.message;
+                }
+                $('#error').text(message);
+            }).on('embedplayer:durationchange', function(event) {
+                if (isFinite(event.duration)) {
+                    $('#currenttime').show().prop('max', event.duration);
+                } else {
+                    $('#currenttime').hide();
+                }
+                $('#duration').text(event.duration.toFixed(2) + ' seconds');
+            }).on('embedplayer:timeupdate', function(event) {
+                $('#currenttime').val(event.currentTime);
+                $('#currenttime-txt').text(event.currentTime.toFixed(2) + ' seconds');
+            }).on('embedplayer:volumechange', function(event) {
+                $('#volume').val(event.volume);
+                $('#volume-label').text(
+                    event.volume <= 0 ? '🔇' :
+                    event.volume <= 1 / 3 ? '🔈' :
+                    event.volume <= 2 / 3 ? '🔉' :
+                    '🔊'
+                );
+                $('#volume-txt').text(event.volume.toFixed(2));
+            }).on('embedplayer:ready', function(event) {
+                var link = $(this).embedplayer('link');
+                if (link) {
+                    $('#link').attr('href', link);
+                    $('#link-wrapper').show();
+                }
+            }).
+            embedplayer("listen").
+            embedplayer('volume', function(volume) {
+                $('#volume').text(volume.toFixed(2));
+            });
+        }
+        function loadVideo(tag, url) {
+            try {
+                var attrs = {
+                    id: 'video',
+                    src: url
+                };
+                switch (tag) {
+                    case 'iframe':
+                        attrs.allowfullscreen = 'allowfullscreen';
+                        attrs.frameborder = '0';
+                        attrs.width = '640';
+                        attrs.height = '360';
+                        break;
+                    case 'video':
+                        attrs.width = '640';
+                        attrs.height = '360';
+                    case 'audio':
+                        attrs.controls = 'controls';
+                        attrs.preload = 'auto';
+                        break;
+                }
+                $('#link-wrapper').hide();
+                $('<' + tag + '>').attr(attrs).replaceAll('#video').each(initEmbed);
+            } catch (e) {
+                $('#error').text(String(e));
+            }
+        }
+        function updateVideo() {
+            var value = $('#embed').val().split('|');
+            $('#duration, #currenttime, #volume').text('?');
+            $('#state').text('loading...');
+            $('#error').text('');
+            loadVideo(value[0], value[1]);
+        }
+        $(document).ready(updateVideo);
+        // ]]>
+    </script>
+</head>
 
     <body>
         <header class="albumTitleBar">
@@ -23,13 +107,11 @@
             <div id="main">
                 <section id="mediaPlayView">
                     <div class="videoPlayer">
+                        <div id="video"></div>
                         <!--<iframe width="100%" height="100%" src="https://www.youtube.com/embed/6JQm5aSjX6g"></iframe>-->
                     </div>
                     <!-- 플레이리스트 추가--> 
-                    
-                    <div class="userPlaylist">
-                         <!-- 샘플데이터 -->
-                     
+                    <div class="userPlaylist">                     
                     </div>
                     
                 </section>
@@ -45,9 +127,8 @@
                     <!-- 검색목록 추가--> 
                     <ul class="searchList">
                     </ul>
-                    <!-- 페이지번호 --> 
+                    <!-- 미리보기 --> 
                     <div class="previewModal hide">
-
                     </div>
                 </section>
             </div>
@@ -61,83 +142,91 @@
         </div>
         <div class="playControl">
             <!-- Audio player -->
-            
-           <div class="ap" id="ap">
+
+            <div class="ap" id="ap">
                 <!--<button class="close_btn"><i class="la la-angle-up icon-up hide"></i><i class="la la-angle-down icon-down"></i></button>-->
                 <div class="ap__inner">
                     <div class="ap__item ap__item--playback">
-                        <button class="ap__controls ap__controls--prev">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M9.516 12l8.484-6v12zM6 6h2.016v12h-2.016v-12z"></path>
-                        </svg>
-                        </button>
-                        <button class="ap__controls ap__controls--toggle">
-                        <svg class="icon-play" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="36" height="36" viewBox="0 0 36 36" data-play="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z" data-pause="M 12,26 16.33,26 16.33,10 12,10 z M 20.66,26 25,26 25,10 20.66,10 z">
-                            <path d="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z"></path>
-                        </svg>
-                        </button>
-                        <button class="ap__controls ap__controls--next">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M15.984 6h2.016v12h-2.016v-12zM6 18v-12l8.484 6z"></path>
-                        </svg>
-                        </button>
+                        <button class="ap__controls ap__controls--prev" onclick="$('#video').embedplayer('prev');" title="Previous">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M9.516 12l8.484-6v12zM6 6h2.016v12h-2.016v-12z"></path>
+                            </svg>
+                            </button>
+                        <button class="ap__controls ap__controls--toggle" onclick="$('#video').embedplayer('play');" title="Play">
+                            <svg class="icon-play" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="36" height="36" viewBox="0 0 36 36" >
+                                <path d="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z"></path>
+                            </svg>
+                            </button>
+                        <button class="ap__controls ap__controls--toggle" onclick="$('#video').embedplayer('pause');" title="Pause">
+                            <svg class="icon-play" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="36" height="36" viewBox="0 0 36 36">
+                                <path  d="M 12,26 16.33,26 16.33,10 12,10 z M 20.66,26 25,26 25,10 20.66,10 z"></path>
+                            </svg>
+                            </button>
+                        <button class="ap__controls ap__controls--next" onclick="$('#video').embedplayer('next');" title="Next">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M15.984 6h2.016v12h-2.016v-12zM6 18v-12l8.484 6z"></path>
+                            </svg>
+                            </button>
                     </div>
                     <div class="ap__item ap__item--track">
-                         <img class="track__image" src="https://i.ytimg.com/vi/6JQm5aSjX6g/default.jpg" />
+                        <img class="track__image" src="https://i.ytimg.com/vi/6JQm5aSjX6g/default.jpg" />
                         <div class="track">
-                        <div class="track__title">Queue is empty</div>
-                        <div class="track__time">
-                            <span class="track__time--current">--</span>
-                            <span> / </span>
-                            <span class="track__time--duration">--</span>
-                        </div>
-
-                        <div class="progress-container">
-                            <div class="progress">
-                            <div class="progress__bar"></div>
-                            <div class="progress__preload"></div>
+                            <div class="track__title">Queue is empty</div>
+                            <div class="track__time">
+                                <span id="currenttime-txt">-</span>
+                                <span> / </span>
+                                <span id="duration">-</span>
                             </div>
-                        </div>
+
+                            <div class="progress-container">
+                                <!--<div class="progress">
+                                    <div class="progress__bar"></div>
+                                    <div class="progress__preload"></div>
+                                </div>-->
+                                <input id="currenttime" type="range" min="0" max="0" value="0" step="0.1" oninput="$('#video').embedplayer('seek', +this.value);" />
+                            </div>
 
                         </div>
                     </div>
                     <div class="ap__item ap__item--settings">
                         <div class="ap__controls volume-container">
-                        <button class="volume-btn">
-                            <svg class="icon-volume-on" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M14.016 3.234q3.047 0.656 5.016 3.117t1.969 5.648-1.969 5.648-5.016 3.117v-2.063q2.203-0.656 3.586-2.484t1.383-4.219-1.383-4.219-3.586-2.484v-2.063zM16.5 12q0 2.813-2.484 4.031v-8.063q2.484 1.219 2.484 4.031zM3 9h3.984l5.016-5.016v16.031l-5.016-5.016h-3.984v-6z"></path>
-                            </svg>
-                            <svg class="icon-volume-off" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M12 3.984v4.219l-2.109-2.109zM4.266 3l16.734 16.734-1.266 1.266-2.063-2.063q-1.734 1.359-3.656 1.828v-2.063q1.172-0.328 2.25-1.172l-4.266-4.266v6.75l-5.016-5.016h-3.984v-6h4.734l-4.734-4.734zM18.984 12q0-2.391-1.383-4.219t-3.586-2.484v-2.063q3.047 0.656 5.016 3.117t1.969 5.648q0 2.25-1.031 4.172l-1.5-1.547q0.516-1.266 0.516-2.625zM16.5 12q0 0.422-0.047 0.609l-2.438-2.438v-2.203q2.484 1.219 2.484 4.031z"></path>
-                            </svg>
-                        </button>
-                        <div class="volume">
-                            <div class="volume__track">
-                            <div class="volume__bar"></div>
+                            <button class="volume-btn">
+                                <svg class="icon-volume-on" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M14.016 3.234q3.047 0.656 5.016 3.117t1.969 5.648-1.969 5.648-5.016 3.117v-2.063q2.203-0.656 3.586-2.484t1.383-4.219-1.383-4.219-3.586-2.484v-2.063zM16.5 12q0 2.813-2.484 4.031v-8.063q2.484 1.219 2.484 4.031zM3 9h3.984l5.016-5.016v16.031l-5.016-5.016h-3.984v-6z"></path>
+                                </svg>
+                                <svg class="icon-volume-off" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M12 3.984v4.219l-2.109-2.109zM4.266 3l16.734 16.734-1.266 1.266-2.063-2.063q-1.734 1.359-3.656 1.828v-2.063q1.172-0.328 2.25-1.172l-4.266-4.266v6.75l-5.016-5.016h-3.984v-6h4.734l-4.734-4.734zM18.984 12q0-2.391-1.383-4.219t-3.586-2.484v-2.063q3.047 0.656 5.016 3.117t1.969 5.648q0 2.25-1.031 4.172l-1.5-1.547q0.516-1.266 0.516-2.625zM16.5 12q0 0.422-0.047 0.609l-2.438-2.438v-2.203q2.484 1.219 2.484 4.031z"></path>
+                                </svg>
+                            </button>
+                            <div class="volume">
+                                <!--<div class="volume__track">-->
+                                <!--<div class="volume__bar"></div>-->
+                                <input class="volume__bar" orient="vertical" type="range" min="0" max="1" value="1" step="0.01" oninput="$('#video').embedplayer('volume', +this.value);" />
+                                <!--</div>-->
+
+                                <!--</div>-->
                             </div>
+                            <!--<button class="ap__controls ap__controls--repeat">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M17.016 17.016v-4.031h1.969v6h-12v3l-3.984-3.984 3.984-3.984v3h10.031zM6.984 6.984v4.031h-1.969v-6h12v-3l3.984 3.984-3.984 3.984v-3h-10.031z"></path>
+                            </svg>
+                            </button>-->
+                            <!--<button class="ap__controls ap__controls--playlist">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M17.016 12.984l4.969 3-4.969 3v-6zM2.016 15v-2.016h12.984v2.016h-12.984zM18.984 5.016v1.969h-16.969v-1.969h16.969zM18.984 9v2.016h-16.969v-2.016h16.969z"></path>
+                            </svg>
+                            </button>-->
                         </div>
-                        </div>
-                        <button class="ap__controls ap__controls--repeat">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M17.016 17.016v-4.031h1.969v6h-12v3l-3.984-3.984 3.984-3.984v3h10.031zM6.984 6.984v4.031h-1.969v-6h12v-3l3.984 3.984-3.984 3.984v-3h-10.031z"></path>
-                        </svg>
-                        </button>
-                        <button class="ap__controls ap__controls--playlist">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M17.016 12.984l4.969 3-4.969 3v-6zM2.016 15v-2.016h12.984v2.016h-12.984zM18.984 5.016v1.969h-16.969v-1.969h16.969zM18.984 9v2.016h-16.969v-2.016h16.969z"></path>
-                        </svg>
-                        </button>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
         <!-- javascript -->
        
-        <script src="static/js/audioPlayer.js"></script>
+        <!--/*<script src="static/js/audioPlayer.js"></script>*/-->
         <!--<script src="static/js/search.js"></script>-->
         <script src="static/js/search-1.js"></script>
-        <script src="//code.jquery.com/jquery.min.js"></script>
+        <!--<script src="//code.jquery.com/jquery.min.js"></script>-->
         <!-- 플레이어에 비디오 추가 -->
         <script type="template" id="playList">
             <li class="pl-list pl-list--current" data-track="{data-track}" data-id="{data-id}">
@@ -172,10 +261,17 @@
 
         <script type="template" id="previewVideo">
             <div class="previewInfo">
-            <button class="close_btn"><i class="la la-times-circle"></i></button>
+                <button class="close_btn"><i class="la la-times-circle"></i></button>
             </div>
-            <iframe width='100%' height='100%' src='https://www.youtube.com/embed/{data-id}'?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>
+            <iframe width='100%' height='100%' src='https://www.youtube.com/embed/{data-id}' ?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>
         </script>
+        
+        <select id="embed" onchange="updateVideo();">
+            <optgroup label="YouTube">
+                <option value="iframe|https://www.youtube.com/embed/eRsGyueVLvQ?enablejsapi=1" selected>Sintel</option>
+                <option value="iframe|https://www.youtube.com/embed/YE7VzlLtp-4?list=PL6B3937A5D230E335&amp;enablejsapi=1">Playlist</option>
+            </optgroup>
+        </select>
 
     </body>
 </body>
