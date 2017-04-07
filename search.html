@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="description" content="">
@@ -57,6 +58,7 @@
                 $('#volume').text(volume.toFixed(2));
             });
         }
+
         function loadVideo(tag, url) {
             try {
                 var attrs = {
@@ -84,6 +86,7 @@
                 $('#error').text(String(e));
             }
         }
+
         function updateVideo() {
             var value = $('#embed').val().split('|');
             $('#duration, #currenttime, #volume').text('?');
@@ -96,94 +99,94 @@
     </script>
 </head>
 
-    <body>
-        <header class="albumTitleBar">
-            <!-- 앨범제목입니다 -->
-            <div class="logo">JinnieCast</div>
-            <h1>코딩할 때 듣는 음악</h1>
-        </header>
-        <div id="wrapper">
-            <div id="main">
-                <section id="mediaPlayView">
-                    <div class="videoPlayer">
-                        <div id="video"></div>
-                        <!--<iframe width="100%" height="100%" src="https://www.youtube.com/embed/6JQm5aSjX6g"></iframe>-->
-                    </div>
-                    <!-- 플레이리스트 추가--> 
-                    <div class="userPlaylist">                     
-                    </div>
-                    
-                </section>
-                <section id="editPlaylist">
-                    <div class="addNewMedia">
-                        <form name="form1" method="POST" onsubmit="return false;">
-                            <input type="text" id="search_box" placeholder="Search your favorite music">
-                            <button class="goSearch"></button>
-                        </form>
-                        <div class="youtubeMedia">
-                        </div>
-                    </div>
-                    <!-- 검색목록 추가--> 
-                    <ul class="searchList">
-                    </ul>
-                    <!-- 미리보기 --> 
-                    <div class="previewModal hide">
-                    </div>
-                </section>
-            </div>
-            <nav>
-                <ul>
-                    <li class="search_btn"><i class="la la-search"></i><span>Search</span></li>
-                    <li class="album_btn"><i class="la la-music"></i><span>My Album</span></li>
-                    <li class="popular_btn"><i class="la la-heart-o"></i><span>popular</span></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="playControl">
-            <!-- Audio player -->
+<body>
+    <header class="albumTitleBar">
+        <!-- 앨범제목입니다 -->
+        <div class="logo">JinnieCast</div>
+        <h1>코딩할 때 듣는 음악</h1>
+    </header>
+    <div id="wrapper">
+        <div id="main">
+            <section id="mediaPlayView">
+                <div class="videoPlayer">
+                    <div id="video"></div>
+                    <!--<iframe width="100%" height="100%" src="https://www.youtube.com/embed/6JQm5aSjX6g"></iframe>-->
+                </div>
+                <!-- 플레이리스트 추가-->
+                <div class="userPlaylist">
+                </div>
 
-            <div class="ap" id="ap">
-                <!--<button class="close_btn"><i class="la la-angle-up icon-up hide"></i><i class="la la-angle-down icon-down"></i></button>-->
-                <div class="ap__inner">
-                    <div class="ap__item ap__item--playback">
-                        <button class="ap__controls ap__controls--prev" onclick="$('#video').embedplayer('prev');" title="Previous">
+            </section>
+            <section id="editPlaylist">
+                <div class="addNewMedia">
+                    <form name="form1" method="POST" onsubmit="return false;">
+                        <input type="text" id="search_box" placeholder="Search your favorite music">
+                        <button class="goSearch"></button>
+                    </form>
+                    <div class="youtubeMedia">
+                    </div>
+                </div>
+                <!-- 검색목록 추가-->
+                <ul class="searchList">
+                </ul>
+                <!-- 미리보기 -->
+                <div class="previewModal hide">
+                </div>
+            </section>
+        </div>
+        <nav>
+            <ul>
+                <li class="search_btn"><i class="la la-search"></i><span>Search</span></li>
+                <li class="album_btn"><i class="la la-music"></i><span>My Album</span></li>
+                <li class="popular_btn"><i class="la la-heart-o"></i><span>popular</span></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="playControl">
+        <!-- Audio player -->
+
+        <div class="ap" id="ap">
+            <!--<button class="close_btn"><i class="la la-angle-up icon-up hide"></i><i class="la la-angle-down icon-down"></i></button>-->
+            <div class="ap__inner">
+                <div class="ap__item ap__item--playback">
+                    <button class="ap__controls ap__controls--prev" onclick="$('#video').embedplayer('prev');" title="Previous">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M9.516 12l8.484-6v12zM6 6h2.016v12h-2.016v-12z"></path>
                             </svg>
                             </button>
-                        <button class="ap__controls ap__controls--toggle" onclick="$('#video').embedplayer('play');" title="Play">
+                    <button class="ap__controls ap__controls--toggle" onclick="$('#video').embedplayer('play');" title="Play">
                             <svg class="icon-play" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="36" height="36" viewBox="0 0 36 36" >
                                 <path d="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z"></path>
                             </svg>
                             </button>
-                        <button class="ap__controls ap__controls--toggle" onclick="$('#video').embedplayer('pause');" title="Pause">
+                    <button class="ap__controls ap__controls--toggle" onclick="$('#video').embedplayer('pause');" title="Pause">
                             <svg class="icon-play" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="36" height="36" viewBox="0 0 36 36">
                                 <path  d="M 12,26 16.33,26 16.33,10 12,10 z M 20.66,26 25,26 25,10 20.66,10 z"></path>
                             </svg>
                             </button>
-                        <button class="ap__controls ap__controls--next" onclick="$('#video').embedplayer('next');" title="Next">
+                    <button class="ap__controls ap__controls--next" onclick="$('#video').embedplayer('next');" title="Next">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#333" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M15.984 6h2.016v12h-2.016v-12zM6 18v-12l8.484 6z"></path>
                             </svg>
                             </button>
-                    </div>
-                    <div class="ap__item ap__item--track">
-                        <img class="track__image" src="https://i.ytimg.com/vi/6JQm5aSjX6g/default.jpg" />
-                        <div class="track">
-                            <div class="track__title">Queue is empty</div>
-                            <div class="track__time">
-                                <span id="currenttime-txt">-</span>
-                                <span> / </span>
-                                <span id="duration">-</span>
-                            </div>
+                </div>
+                <div class="ap__item ap__item--track">
+                    <img class="track__image" src="https://i.ytimg.com/vi/6JQm5aSjX6g/default.jpg" />
+                    <div class="track">
+                        <div class="track__title">Queue is empty</div>
+                        <div class="track__time">
+                            <span id="currenttime-txt">-</span>
+                            <span> / </span>
+                            <span id="duration">-</span>
+                        </div>
 
-                            <div class="progress-container">
-                                <!--<div class="progress">
+                        <div class="progress-container">
+                            <!--<div class="progress">
                                     <div class="progress__bar"></div>
                                     <div class="progress__preload"></div>
                                 </div>-->
-                                <input id="currenttime" type="range" min="0" max="0" value="0" step="0.1" oninput="$('#video').embedplayer('seek', +this.value);" />
-                            </div>
+                            <input id="currenttime" type="range" min="0" max="0" value="0" step="0.1" oninput="$('#video').embedplayer('seek', +this.value);" />
+                        </div>
 
                     </div>
 
@@ -222,7 +225,7 @@
             </div>
         </div>
         <!-- javascript -->
-       
+
         <!--/*<script src="static/js/audioPlayer.js"></script>*/-->
         <!--<script src="static/js/search.js"></script>-->
         <script src="static/js/search-1.js"></script>
@@ -242,7 +245,7 @@
                 </div>
                 <div class="pl-list__title">{title}</div>
                 <button class="pl-list__remove icon_btn"><i class="la la-minus-circle"></i></button>
-            </li>            
+            </li>
         </script>
         <!-- youtube 키워드 검색한 리스트를 불러옵니다.-->
         <script type="template" id="searchVideo">
@@ -257,7 +260,7 @@
                 <button class="pl-list__add icon_btn"><i class="la la-plus-circle"></i></button>
             </li>
         </script>
-        
+
 
         <script type="template" id="previewVideo">
             <div class="previewInfo">
@@ -265,7 +268,7 @@
             </div>
             <iframe width='100%' height='100%' src='https://www.youtube.com/embed/{data-id}' ?rel=0 & enablejsapi=1 frameborder=0 allowfullscreen></iframe>
         </script>
-        
+
         <select id="embed" onchange="updateVideo();">
             <optgroup label="YouTube">
                 <option value="iframe|https://www.youtube.com/embed/eRsGyueVLvQ?enablejsapi=1" selected>Sintel</option>
@@ -273,7 +276,7 @@
             </optgroup>
         </select>
 
-    </body>
+</body>
 
 </body>
 
