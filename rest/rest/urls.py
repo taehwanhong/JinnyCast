@@ -44,4 +44,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^bbs/', include('bbs.urls')),
+    url(r'^album/', include('album.urls')),
 ]
