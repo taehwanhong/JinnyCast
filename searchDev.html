@@ -101,7 +101,6 @@
         // ]]>
     </script>
 
-
 </head>
 
 <body>
@@ -198,6 +197,15 @@
                         </div>
 
                     </div>
+                    <div class="track__time"><span class="track__time--current">--</span><span>/ </span><span class="track__time--duration">--</span>
+                    </div>
+                    <div class="progress-container">
+                        <input id="currenttime" type="range" min="0" max="0" value="0" step="0.1" oninput="$('#video').embedplayer('seek', +this.value);" />
+                    </div>
+                    <!--<div class="progress">
+                            <div class="progress__bar"></div>
+                            <div class="progress__preload"></div>
+                        </div>-->
                 </div>
                 <div class="ap__item ap__item--settings">
                     <div class="ap__controls volume-container">
@@ -232,7 +240,13 @@
             </div>
         </div>
     </div>
+    <!-- <label for="volume" id="volume-label">🔊</label><input id="volume" type="range" min="0" max="1" value="1" step="0.01" oninput="$('#video').embedplayer('volume', +this.value);" /></p><input id="currenttime" type="range" min="0" max="0" value="0" step="0.1" oninput="$('#video').embedplayer('seek', +this.value);" /><p><span>duration: <span id="duration">?</span></span>,
+        <span>current time: <span id="currenttime-txt">?</span></span>,
+        <span>volume: <span id="volume-txt">?</span></span>,
+        <span id="link-wrapper"><a id="link" href="javascript:;">link</a>,
+        </span><span id="state">loading...</span><span id="error"></span></p></div>-->
     <!-- javascript -->
+
 
 
     <script src="static/js/search.js"></script>
@@ -267,6 +281,7 @@
             </div>
             <button class="pl-list__add icon_btn"><i class="la la-plus-circle"></i></button>
         </li>
+
     </script>
 
 
